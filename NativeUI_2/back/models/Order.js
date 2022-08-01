@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
         /* name email phone 人數  預訂時間   */
         name: {
             type: mongoose.objectId,
-            ref: 'name',
+            ref: 'users',
         },
 
     }],
@@ -13,6 +13,7 @@ const Schema = new mongoose.Schema({
     note: {},
     submitDate: {
         // 客戶送出表單的時間
+        type:
     },
     /* finalEditedDate: {
         // 表單最後修改的時間
