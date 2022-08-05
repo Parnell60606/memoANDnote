@@ -1,8 +1,10 @@
-<script setup>
+<!-- 我都忘了這裡是首頁 -->
+
+<!-- <script setup>
 import { NGrid } from 'naive-ui'
 import { NButton } from 'naive-ui'
 </script>
-<!-- 
+
 <template>
   <n-button>naive-ui</n-button>
   <n-grid :x-gap="12" :y-gap="8" :cols="4">
@@ -44,3 +46,4 @@ import { NButton } from 'naive-ui'
   background-color: rgba(0, 128, 0, 0.24);
 }
 </style> -->
+

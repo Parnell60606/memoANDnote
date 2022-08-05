@@ -63,17 +63,16 @@
 
         <n-layout-footer>
             敷忒r
-            <!-- 測試用 連往管理者後台 -->
-            <router-link to="/adminlayout">
-                <div>
-                    ～go to admin後台～
-                </div>
-            </router-link>
         </n-layout-footer>
     </n-layout>
 
 
-
+    <!-- 測試用 連往管理者後台 -->
+    <router-link to="/adminlayout">
+        <div>
+            ～go to admin後台～
+        </div>
+    </router-link>
 
 </template>
 
