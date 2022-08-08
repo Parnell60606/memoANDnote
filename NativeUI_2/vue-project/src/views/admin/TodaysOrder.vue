@@ -1,7 +1,7 @@
 <template>
     <h1>今天～的～訂單～</h1>
     <!-- <n-space justify="space-around"> -->
-    <n-space justify="space-around">
+    <n-space justify="center">
 
         <n-calendar v-model:value="value" #="{ year, month, date }" :is-date-disabled="isDateDisabled"
             @update:value="handleUpdateValue" class="calendar">

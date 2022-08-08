@@ -58,12 +58,10 @@
 
                     </n-message-provider> -->
 
-                    <n-space justify="space-around">
 
-                        <n-message-provider>
-                            <router-view />
-                        </n-message-provider>
-                    </n-space>
+                    <n-message-provider>
+                        <router-view />
+                    </n-message-provider>
 
 
                     <div class="space" style="height: 500px;"></div>

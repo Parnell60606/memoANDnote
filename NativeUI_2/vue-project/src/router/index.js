@@ -1,74 +1,106 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import FrontLayout from '../views/FrontLayout.vue'
+import AdminLayout from '../views/AdminLayout.vue'
+import MenberLayout from '../views/MenberLayout.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    /* 首頁(第一頁)--------------------------------------------------------------------------- */
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'firstPage',
+      component: () => import('../views/FirstPagetest.vue')
     },
-    /* 前台 --------------------------------------------------------------------------- */
+    /* 前台--------------------------------------------------------------------------- */
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/front/AboutView.vue')
+      // 前台Layout
+      path: '/home',
+      name: 'frontlayout',
+      component: FrontLayout,
+      children: [
+        {
+          // 首頁   最新消息基本資料等  因為直接連到about怪怪的
+          path: '',
+          name: 'home',
+          component: () => import('../views/front/HomeView.vue')
+        },
+        {
+          path: '/about',
+          name: 'about',
+          // route level code-splitting
+          // this generates a separate chunk (About.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import('../views/front/AboutView.vue')
+        },
+        {
+          path: '/menu',
+          name: 'menu',
+          component: () => import('../views/front/MenuView.vue')
+        },
+        {
+          path: '/location',
+          name: 'location',
+          component: () => import('../views/front/LocationView.vue')
+        },
+        {
+          path: '/booking',
+          name: 'booking',
+          component: () => import('../views/front/BookingView.vue')
+        },
+        {
+          path: '/contactus',
+          name: 'contactus',
+          component: () => import('../views/front/ContactUsView.vue')
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: () => import('../views/front/LoginView.vue')
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: () => import('../views/front/RegisterView.vue')
+        },
+      ]
     },
+
+    /* 管理者後台 --------------------------------------------------------------------------- */
     {
-      path: '/menu',
-      name: 'menu',
-      component: () => import('../views/front/MenuView.vue')
+      path: '/admin',
+      component: AdminLayout,
+      children: [
+        {
+          path: '',
+          name: 'AdminHome',
+          component: () => import('../views/admin/AdminHome.vue')
+        },
+        {
+          path: '/todaysorder',
+          name: 'todaysorder',
+          component: () => import('../views/admin/TodaysOrder.vue')
+        },
+        {
+          path: '/ordersview',
+          name: 'ordersview',
+          component: () => import('../views/admin/OrdersView.vue')
+        },
+        {
+          path: '/backgrounddata',
+          name: 'backgrounddata',
+          component: () => import('../views/admin/BackgroundData.vue')
+        }
+      ]
     },
+    /* 會員後台 --------------------------------------------------------------------------- */
     {
-      path: '/location',
-      name: 'location',
-      component: () => import('../views/front/LocationView.vue')
-    },
-    {
-      path: '/booking',
-      name: 'booking',
-      component: () => import('../views/front/BookingView.vue')
-    },
-    {
-      path: '/contactus',
-      name: 'contactus',
-      component: () => import('../views/front/ContactUsView.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/front/LoginView.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/front/RegisterView.vue')
-    },
-    /* 管理者後台--------------------------------------------------------------------------- */
-    {
-      path: '/adminlayout',
-      name: 'adminlayout',
-      component: () => import('../views/AdminLayout.vue')
-    },
-    {
-      path: '/todaysorder',
-      name: 'todaysorder',
-      component: () => import('../views/admin/TodaysOrder.vue')
-    },
-    {
-      path: '/ordersview',
-      name: 'ordersview',
-      component: () => import('../views/admin/OrdersView.vue')
-    },
-    {
-      path: '/backgrounddata',
-      name: 'backgrounddata',
-      component: () => import('../views/admin/BackgroundData.vue')
+      path: '/menber',
+      component: MenberLayout,
+      children: []
     }
+
   ]
 })
 

@@ -1,16 +1,79 @@
 # Naive UI 
 ## 要注意ㄉ地方 
 + 文字 color 均没有使用对应类型的 color ,而是 contentTextColor, titleTextColor <a href="https://github.com/TuSimple/naive-ui/issues/1495"> 來源</a>
-+ 樣式外連scss直接蓋掉就好ㄌ
++ 樣式可以暴力外連scss直接蓋掉
 + 響應式 (RWD)部分除了Grid以外都很微妙
-+ `<router-view />` 也要用 <`n-message-provider>` 太麻煩ㄌㄅ....
++ `<router-view />` 也要用 `<n-message-provider>` 太麻煩ㄌㄅ....
 
 + 很多props的值只能靠底下回傳的值來改 why????
 
 + props 開頭有 : 沒 : 到底差在哪???
 
 
+
 <br><br><br>
+
+# 主題變量
+<a href="https://www.naiveui.com/zh-CN/dark/docs/customize-theme">調整主題（官方文件）</a>  
+
+1. 新增 theme.js檔案  
+2. 把這個複製上來在修改 ↓↓
+- ```js  
+    import { NConfigProvider } from 'naive-ui'
+
+  /**
+   * js 文件下使用这个做类型提示
+   * @type import('naive-ui').GlobalThemeOverrides
+   */
+  const themeOverrides = {
+    common: {
+      primaryColor: '#FF0000'
+    },
+    Button: {
+      textColor: '#FF0000'
+    },
+    Select: {
+      peers: {
+        InternalSelection: {
+          textColor: '#FF0000'
+        }
+      }
+    }
+  }
+    export default themeOverrides
+
+    ```  
+    - 有要調整的去官方文件右下角輸出再導入
+
+3. `App.vue`中引入`theme.js`  
+    - ```js 
+        import themeOverrides from './assets/theme.js'
+        ```
+    - `<n-config-provider>`標籤中加入
+`:theme-overrides=“themeOverrides”` 此props
+    - ```html
+        <template>
+            <n-config-provider :theme-overrides="themeOverrides">
+            <my-app />
+            </n-config-provider>
+        </template>
+        ```
+        - `:theme` 主題變量
+        - `:theme-overrides` 主題變量覆蓋
+
+<hr>
+
+### 變量名稱
++ textColor 文字顏色
++ textColorInverted 文字顏色反轉
+
+
+# n-config-provider  
+-  `inline-theme-disabled` 是否禁用行內css樣式 (非響應式)
+- `preflight-style-disabled` 是否禁止默認css (主題完全可控制) (響應式)
+
+<br><br><br>
+
 # n-layout  
 有點類似 Bootstrap 的 .container 和簡單版本的 .row .col
 ## prop

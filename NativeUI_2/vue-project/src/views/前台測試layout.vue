@@ -68,7 +68,7 @@
 
 
     <!-- 測試用 連往管理者後台 -->
-    <router-link to="/adminlayout">
+    <router-link to="/admin">
         <div>
             ～go to admin後台～
         </div>
