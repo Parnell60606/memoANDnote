@@ -1,5 +1,5 @@
 <template>
-
+    <!-- 登入註冊頁面 (用n-card來做) -->
     <div>
 
         <n-card :bordered="false">
@@ -49,6 +49,11 @@
 
 <style scoped>
 .n-card {
+    /* 
+        登入頁面寬度最大 500
+        背景透明 (避免疊色)
+     */
     max-width: 500px;
+    background: transparent;
 }
 </style>

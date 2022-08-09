@@ -1,20 +1,42 @@
 <template>
     <h1>今天～的～訂單～</h1>
     <!-- <n-space justify="space-around"> -->
-    <n-space justify="center">
+    <!-- <n-space justify="center"> -->
 
-        <n-calendar v-model:value="value" #="{ year, month, date }" :is-date-disabled="isDateDisabled"
-            @update:value="handleUpdateValue" class="calendar">
-            {{ year }}-{{ month }}-{{ date }}
-        </n-calendar>
 
-        <div class="box">
-            <n-message-provider>
-                <data-tabletest />
-            </n-message-provider>
-        </div>
+    <n-grid cols="1 800:10 1200:16 1500:16" x-gap="20 1200:40 " item-responsive>
 
-    </n-space>
+        <n-grid-item span="1 400:3 800:6  1200:8 " offset="0 1200:1"
+            style="background-color:lightblue;max-width: 800px;">
+
+            <n-calendar v-model:value="value" #="{ year, month, date }" :is-date-disabled="isDateDisabled"
+                @update:value="handleUpdateValue" class="calendar">
+                {{ year }}-{{ month }}-{{ date }}
+            </n-calendar>
+        </n-grid-item>
+
+
+        <n-grid-item span="1 400:3 800:4  1200:6 " style="background-color:brown;">
+            <div class="data-box">
+                <n-message-provider>
+                    <data-tabletest :max-height="700" />
+                </n-message-provider>
+            </div>
+
+        </n-grid-item>
+    </n-grid>
+
+
+
+    <div class="box2" id="test" ref="el">
+        Height: {{ height }} <br>
+        Width: {{ Width }}
+    </div>
+
+
+
+    <!-- </n-space> -->
+
 
 
 
@@ -27,11 +49,29 @@ import { defineComponent, ref } from "vue";
 import { useMessage } from "naive-ui";
 import { isYesterday, addDays } from "date-fns/esm";
 
+import { useElementSize } from '@vueuse/core'
+
+
+// 抓ㄅ到
+// const test = document.getElementById('test')
+// const widthTest = test.offsetWidth
+// console.log(widthTest)
+
+
+
 export default defineComponent({
     setup() {
+        const el = ref(null)
+        const { width, height } = useElementSize(el)
+
         const message = useMessage();
         window.$message = useMessage()
+
         return {
+            el,
+            width,
+            height,
+
             value: ref(addDays(Date.now(), 1).valueOf()),
             handleUpdateValue(_, { year, month, date }) {
                 message.success(`${year}-${month}-${date}`);
@@ -41,12 +81,14 @@ export default defineComponent({
                     return true;
                 }
                 return false;
-            }
+            },
+
         };
     }
 });
 
 </script>
+
 
 
 <style scoped>
@@ -68,7 +110,7 @@ export default defineComponent({
 
 
 /* ---- 橫排 ---- */
-.calendar {
+/* .calendar {
     height: 800px;
 }
 
@@ -90,5 +132,24 @@ export default defineComponent({
         max-width: 800px;
         min-width: 100%;
     }
+} */
+
+
+.box2 {
+    background-color: aquamarine;
+    /* max-width: 500px; */
+    /* min-width: 500px; */
+    /* width: 500px; */
+    /* height: 500px; */
+}
+
+@media (max-width:1000px) {
+    .calendar {
+        max-height: 500px;
+    }
+
+    /* .data-box {
+        max-height: 300px;
+    } */
 }
 </style>

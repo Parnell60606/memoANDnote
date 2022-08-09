@@ -98,7 +98,23 @@ const router = createRouter({
     {
       path: '/menber',
       component: MenberLayout,
-      children: []
+      children: [
+        {
+          path: '',
+          name: 'lastorder',
+          component: () => import('../views/menberBack/LastOrder.vue')
+        },
+        {
+          path: '/pastorders',
+          name: 'pastorders',
+          component: () => import('../views/menberBack/PastOrders.vue')
+        },
+        {
+          path: '/canceledorders',
+          name: 'canceledorders',
+          component: () => import('../views/menberBack/CanceledOrders.vue')
+        }
+      ]
     }
 
   ]

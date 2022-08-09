@@ -15,15 +15,15 @@
 
 
                     <nav>
-                        <RouterLink to="/">
+                        <RouterLink to="/menber">
                             <n-h2>目前的訂位</n-h2>
                         </RouterLink>
 
-                        <RouterLink to="/">
+                        <RouterLink to="/pastorders">
                             <n-h2>過去的訂位</n-h2>
                         </RouterLink>
 
-                        <RouterLink to="/">
+                        <RouterLink to="/canceledorders">
                             <n-h2>取消的訂位</n-h2>
                         </RouterLink>
 
@@ -41,10 +41,7 @@
 
 
                     <!-- <n-message-provider>
-                        <data-tabletest />
-
-                        <model-test />
-
+                        <data-tabletest :max-height="800" />
                     </n-message-provider> -->
 
 

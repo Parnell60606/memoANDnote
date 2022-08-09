@@ -1,6 +1,7 @@
 # Naive UI 
 ## 要注意ㄉ地方 
 + 文字 color 均没有使用对应类型的 color ,而是 contentTextColor, titleTextColor <a href="https://github.com/TuSimple/naive-ui/issues/1495"> 來源</a>
++ 使用 xicons 作為圖標庫
 + 樣式可以暴力外連scss直接蓋掉
 + 響應式 (RWD)部分除了Grid以外都很微妙
 + `<router-view />` 也要用 `<n-message-provider>` 太麻煩ㄌㄅ....
@@ -51,7 +52,7 @@
         ```
     - `<n-config-provider>`標籤中加入
 `:theme-overrides=“themeOverrides”` 此props
-    - ```html
+       ```html
         <template>
             <n-config-provider :theme-overrides="themeOverrides">
             <my-app />
@@ -68,6 +69,9 @@
 + textColorInverted 文字顏色反轉
 
 
+
+<br><br><br>
+
 # n-config-provider  
 -  `inline-theme-disabled` 是否禁用行內css樣式 (非響應式)
 - `preflight-style-disabled` 是否禁止默認css (主題完全可控制) (響應式)
@@ -77,7 +81,8 @@
 # n-layout  
 有點類似 Bootstrap 的 .container 和簡單版本的 .row .col
 ## prop
-- `:native-scrollbar="false"` 是否使用html內建網頁卷軸 (false使用naive ui 內建的卷軸)
+- `:native-scrollbar="false"` 是否使用html內建網頁卷軸  
+ ( false使用naive ui 內建的卷軸 )
 - `bordered` 邊框
 - `has-sider` 這個組件的子元件 橫排有沒有複數或並排的 layout (這個組件內部有沒有siderbar) 
     - siderbar 要把這個prop放在父元件  
@@ -108,28 +113,65 @@
 # n-data-table 數據表格
 我拿來做後台的數據渲染
 ## props  
- -  :max-height="250"  這樣設定就可以有捲軸
-        - 不用另外scrollbar
-        - 可以固定thead 表頭欄位
-
+-  :max-height="250"  這樣設定就可以有捲軸  
+    - 不用另外做 scrollbar
+    - 可以固定 thead 表頭欄位  
+  
 - `striped` 和 tr:nth-child(even) 改偶數行的顏色有一樣的效果
 - `n-dropdown` 右鍵菜單  (可以44看  ㄅ用特別放編輯欄位)
 
 <br><br><br>
 
-# n-space  
 
+# n-grid 網格
+  要左右置中的話，總 cols 網格數要 `+2` ，第一個子元件加上 `:offset="1"`  
+  ```html
+    <!-- pug -->
+     n-grid (:cols:"6")
+        n-gi (span:"2" :offset="1")
+        n-gi (span:"2")
+```
+- 有響應式的props， 值如果只有單數(沒有其他斷點的值)的話開頭要放 `:`
+
+## props 
+- `x-gap` 橫排的間隔   (*ResponsiveDescription*)
+  ```  
+  :x-gap="12"
+  ```
+
+- `y-gap`  直排的間隔  (*ResponsiveDescription*)
+- `item-responsive`  n-gi 是不是響應式
+- `responsive`  響應式是根據 自身大小 (預設:'self') 還是根據 視窗大小 ('window') 
+
++ n-grid 一定要包 `n-gi` ( n-grid-item 的縮寫 ) 才能生效
+  - # n-grid-item 網格列表
+    ## props
+    - `span` 佔據的網格數   (*ResponsiveDescription*)
+      ```
+      span="0 400:1 600:2 800:3"
+      ```
+    - `offset` 往左偏移幾格
+
+
+# n-space  
+拿來做懶人版彈性盒的東西
 ## props
 
 - `justify` 主軸對齊(預設左右對齊)
-```html
-<n-space justify=" space-between">
+  ```html
+  <n-space justify=" space-between">
     左
     右
-</n-space>
-```
+  </n-space>
+  ```
 
 - `vertical` (垂直對齊)
+- `size` 子元件 間格大小 
+  - 'small' | 'medium' | 'large' | number | [number, number]
+  - 用 nunber 的話 ， props前面要加 `:`
+  ```  
+  :size="50"
+  ```
 
 <br><br>
 
@@ -143,6 +185,14 @@
 
 # n-button 按鈕
 ## props
+
+- `type`  套用該類型的按鈕顏色/類型 
+- `ghost` 透明背景按鈕 (有線條框)
+  ```html
+  <n-button type="primary">
+      Primary
+    </n-button>
+    ```
 
 - `round` 圓角按鈕
 
@@ -158,4 +208,30 @@
     - ```css
       :mask-closable="false" 
 - `preset`  modal預設類型
-    - 按照preset類型，可以個別套用 n-dialog、 n-card 的props 和 slots
+    - 按照preset類型，可以個別套用 n-dialog、 n-card 的 props 和 slots
+
+
+<br><br><br>
+
+# n-message
+我討厭這個他規則好多
+
+### 傳送訊息
+
+- 沒有圖標的訊息
+  ```js
+        message.success("Cancel", { showIcon: false });
+  ```
+- 可關閉的訊息
+  ```js  
+    message.info("I don't know why", {
+      closable: true,
+      duration: 5e3
+    });
+    ```
+    
+- 五秒後關閉的訊息 
+  ```js
+    message.loading("", { duration: 5000 });
+
+  ```

@@ -2,6 +2,10 @@
  * js 文件下使用這個做類型提示
  * @type import('naive-ui').GlobalThemeOverrides
  */
+
+const lightBrown = "#F0F0EAFF"
+
+
 const themeOverrides = {
     common: {
         // primaryColor: '#F0F0EA'
@@ -16,6 +20,16 @@ const themeOverrides = {
         textColor: '#ffffff',
         "colorHover": "#FF000000"
 
+    },
+    "Dialog": {
+        "padding": "50px 40px 40px 50px",
+        "borderRadius": "15px"
+
+    },
+    "Card": {
+        // "colorModal": lightBrown,
+        "colorModal": "#FFFFFFDD",
+        "borderRadius": "15px"
     },
     Select: {
         peers: {

@@ -7,6 +7,7 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "@vueuse/core": "^9.1.0",
     "pinia": "^2.0.16",
     "unplugin-vue-components": "^0.21.2",
     "vue": "^3.2.37",

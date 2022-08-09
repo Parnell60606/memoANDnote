@@ -1,4 +1,5 @@
 <template>
+    <!-- 登入頁面的 n-modal (彈出視窗) -->
     <n-button @click="showModal = true" round>
         <div>登入</div>
         <n-divider vertical />
@@ -29,13 +30,15 @@ export default defineComponent({
             bodyStyle: {
                 // width: "fit-content",
                 width: "500px",
+                backdropFilter: "blur(6px) brightness(150%)",
                 // height: "650px",
-                borderRadius: "15px",
+                // borderRadius: "15px",
                 // background: "none"
             },
             headerStyle: {
-                padding: "15px 15px 0 15px",
-                // margin: "5px",
+                padding: "0px 24px 0 24px",
+                transform: "translate(0px,24px)",
+                zIndex: "10",
 
             }
         };
