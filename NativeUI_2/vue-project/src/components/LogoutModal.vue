@@ -1,19 +1,25 @@
 <template>
+
     <n-button @click="showModal = true" round>
         <div>登出</div>
     </n-button>
     <!-- <n-modal v-model:show="showModal" :style="bodyStyle" preset="dialog" title="登出" content="確定要登出嗎？" positive-text="是"
         negative-text="否" @positive-click="submitCallback" @negative-click="cancelCallback" :header-style="headerStyle"> -->
-    <n-modal v-model:show="showModal" :style="bodyStyle" preset="card" negative-text="否" :header-style="headerStyle">
+    <n-modal v-model:show="showModal" :style="bodyStyle" preset="card" negative-text="否">
 
-        <div style="padding:5px 24px ;">
-            確定要登出嗎？
-        </div>
+        <n-spin v-model:show="showLoading">
+
+            <div style="padding:5px 24px ;">
+                確定要登出嗎？
+            </div>
+
+        </n-spin>
 
         <template #footer>
 
-            <n-space justify="end" style="padding:0 5px ;" :size="large">
+            <n-space justify="end" style="padding:0 5px ;" size="large">
 
+                <!-- <n-button @click="submitCallback, showLoading = true" type="primary"> -->
                 <n-button @click="submitCallback" type="primary">
                     是
                 </n-button>
@@ -38,8 +44,11 @@ export default defineComponent({
     setup() {
         const message = useMessage();
         const showModalRef = ref(false);
+        const showLoadingRef = ref(false);
+
         window.$message = useMessage();
         return {
+            showLoading: showLoadingRef,
             showModal: showModalRef,
             bodyStyle: {
                 // width: "fit-content",
@@ -55,16 +64,21 @@ export default defineComponent({
                 // 0.6秒的 loading 提示
                 message.loading("", { duration: 600 });
 
-
-                // console.log(showModalRef)
-                // console.log(showModalRef.value)
+                showLoadingRef.value = true,
 
 
-                /* 抓 showModalRef 的 value 回傳 false，0.7秒後把視窗關掉 */
-                setTimeout(() => {
-                    message.success("登出成功");
-                    showModalRef.value = false
-                }, 700)
+
+                    // console.log(showModalRef)
+                    // console.log(showModalRef.value)
+
+
+                    /* 抓 showModalRef 的 value 回傳 false，0.7秒後把視窗關掉 */
+                    setTimeout(() => {
+                        message.success("登出成功");
+                        showModalRef.value = false;
+                        showLoadingRef.value = false;
+
+                    }, 800)
             }
 
         };
@@ -74,4 +88,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.n-modal-mask {
+    background-color: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(2px) !important;
+}
 </style>

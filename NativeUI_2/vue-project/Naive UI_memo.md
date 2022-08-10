@@ -3,6 +3,7 @@
 + 文字 color 均没有使用对应类型的 color ,而是 contentTextColor, titleTextColor <a href="https://github.com/TuSimple/naive-ui/issues/1495"> 來源</a>
 + 使用 xicons 作為圖標庫
 + 樣式可以暴力外連scss直接蓋掉
+  + 優先權比在子元件上寫 `<style scope></style>` 和 theme.js 內建樣式還高....
 + 響應式 (RWD)部分除了Grid以外都很微妙
 + `<router-view />` 也要用 `<n-message-provider>` 太麻煩ㄌㄅ....
 
@@ -17,7 +18,7 @@
 # 主題變量
 <a href="https://www.naiveui.com/zh-CN/dark/docs/customize-theme">調整主題（官方文件）</a>  
 
-1. 新增 theme.js檔案  
+1. 新增 theme.js 檔案  
 2. 把這個複製上來在修改 ↓↓
 - ```js  
     import { NConfigProvider } from 'naive-ui'
@@ -120,7 +121,19 @@
 - `striped` 和 tr:nth-child(even) 改偶數行的顏色有一樣的效果
 - `n-dropdown` 右鍵菜單  (可以44看  ㄅ用特別放編輯欄位)
 
-<br><br><br>
+
+<br><br>
+
+# n-progress 進度條
+
+
+<br><br>
+
+# n-popover  彈出訊息 (白底)
+- `placement` 彈出位置 
+  ```
+  'top-start' | 'top' | 'top-end' | 'right-start' | 'right' | 'right-end' | 'bottom-start' | 'bottom' | 'bottom-end' | 'left-start' | 'left' | 'left-end' |
+  ```
 
 
 # n-grid 網格
@@ -179,6 +192,14 @@
 
 ## props
 - `vertical` 垂直的分隔線
+- `title-placement` 分隔線內置標題位置  
+    - `('left' | 'right' | 'center')`
+
+  ```html
+    <n-divider title-placement="left">
+        分隔線內置標題
+    </n-divider>
+    ```
 
 
 <br><br>

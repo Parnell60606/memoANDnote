@@ -19,7 +19,9 @@
         <n-grid-item span="1 400:3 800:4  1200:6 " style="background-color:brown;">
             <div class="data-box">
                 <n-message-provider>
-                    <data-tabletest :max-height="700" />
+                    <!-- <data-tabletest :max-height="700" /> -->
+                    <data-tabletest />
+
                 </n-message-provider>
             </div>
 
@@ -30,7 +32,10 @@
 
     <div class="box2" id="test" ref="el">
         Height: {{ height }} <br>
-        Width: {{ Width }}
+        <!-- Width: {{ Width }} <br> -->
+        元件面積（響應式）：{{ fullArea }}<br>
+        元件高度（響應式）：{{ heightView }}<br>
+        元件寬度（響應式）：{{ widthView }}<br>
     </div>
 
 
@@ -45,17 +50,10 @@
 
 <script>
 
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed, onUpdated } from "vue";
 import { useMessage } from "naive-ui";
 import { isYesterday, addDays } from "date-fns/esm";
-
 import { useElementSize } from '@vueuse/core'
-
-
-// 抓ㄅ到
-// const test = document.getElementById('test')
-// const widthTest = test.offsetWidth
-// console.log(widthTest)
 
 
 
@@ -64,6 +62,29 @@ export default defineComponent({
         const el = ref(null)
         const { width, height } = useElementSize(el)
 
+        onUpdated(() => {
+            // DOM元素將在轉換狀態之後分配給ref
+            console.log(el.value)
+            console.log(height.value)
+            console.log(width.value)
+        })
+
+        // 函式運算後回傳
+        const fullArea = computed(() => {
+            return height.value * width.value
+        })
+
+        const heightView = computed(() => {
+            return height.value
+        })
+
+
+        const widthView = computed(() => {
+            return width.value
+        })
+
+
+
         const message = useMessage();
         window.$message = useMessage()
 
@@ -71,6 +92,9 @@ export default defineComponent({
             el,
             width,
             height,
+            fullArea,
+            heightView,
+            widthView,
 
             value: ref(addDays(Date.now(), 1).valueOf()),
             handleUpdateValue(_, { year, month, date }) {
@@ -84,7 +108,27 @@ export default defineComponent({
             },
 
         };
-    }
+    },
+
+
+
+
+    /*     onUpdated() {
+            const el = ref(null)
+            const { width, height } = useElementSize(el)
+    
+            // DOM元素將在轉換狀態之後分配給ref
+            console.log(el.value)
+            console.log(height.value)
+            console.log(width.value)
+            const heightA = height.value
+            return {
+                el,
+                width,
+                height,
+                heightA
+            }
+        } */
 });
 
 </script>

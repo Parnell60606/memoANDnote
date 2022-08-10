@@ -8,8 +8,11 @@
 
             <n-layout has-sider class="content" style="height: 100vh;background: brown;">
                 <!-- sidebar ---------------------------------------------------------------->
-                <n-layout-sider collapse-mode="transform" :collapsed-width=testWidth :width=300 show-trigger="bar"
+                <!-- <n-layout-sider collapse-mode="transform" :collapsed-width=testWidth :width=300 show-trigger="bar"
+                    content-style="padding: 40px;" :native-scrollbar="false" bordered> -->
+                <n-layout-sider collapse-mode="transform" :collapsed-width=20 :width=300 show-trigger="bar"
                     content-style="padding: 40px;" :native-scrollbar="false" bordered>
+
 
                     <div id="admin-title">管理者後台</div>
 
@@ -96,7 +99,7 @@ import { defineComponent, watch } from 'vue';
 
 <script>
 
-const windowWidth = ref(window.innerWidth);
+/* const windowWidth = ref(window.innerWidth);
 
 const windowHeight = window.innerHeight;
 
@@ -107,7 +110,7 @@ let testWidth = ref(20)
 
 if (windowWidth.value <= 576) {
     testWidth = ref(100)
-}
+} */
 
 export default {
     // name: "Register",

@@ -53,9 +53,13 @@
       <!-- 前台網頁內容(渲染) ----------------------------------------------------------------------------->
       <n-layout-content content-style="padding: 24px;">
 
-        <n-message-provider>
-          <router-view></router-view>
-        </n-message-provider>
+        <div class="container">
+
+          <n-message-provider>
+            <router-view></router-view>
+          </n-message-provider>
+
+        </div>
 
       </n-layout-content>
 
@@ -81,6 +85,8 @@
         <n-message-provider>
           <LogoutModal />
         </n-message-provider>
+
+
       </n-layout-footer>
 
     </n-layout>

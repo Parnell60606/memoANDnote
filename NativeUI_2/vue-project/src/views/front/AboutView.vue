@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="row">
     <div class="about my-5">
 
       <div class="d-flex m-4">
@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="row">
       <div class="hope mb-4">
 
         <div class="d-flex m-4">
@@ -51,8 +51,8 @@ p {
   font-size: 17px;
 }
 
-
-.contaner {
+/* 
+.container {
   background: black;
-}
+} */
 </style>

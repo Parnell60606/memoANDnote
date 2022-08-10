@@ -2,6 +2,29 @@
     --sidebar-text-color: #ffffff;
 }
 
+
+// 登入登出遮罩
+.n-modal-mask {
+    background-color: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(2px);
+}
+
+
+.n-divider__line {
+    /* color: brown; */
+    background-color: #363B4Baa !important;
+    transform: translate(0px, -20px);
+}
+
+
+// 數據表格的Tbody
+// .n-data-table-base-table-body {
+//     max-height: 300px;
+// }
+
+
+
+
 // .n-h {
 //     color: var(--sidebar-text-color);
 // }

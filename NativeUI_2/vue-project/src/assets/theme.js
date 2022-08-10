@@ -31,6 +31,16 @@ const themeOverrides = {
         "colorModal": "#FFFFFFDD",
         "borderRadius": "15px"
     },
+    // 彈出訊息 (對話框)
+    "Popover": {
+        "color": "#363B4B88",
+        "boxShadow": "0",
+        "dividerColor": "rgb(239, 239, 245)",
+        "textColor": "rgba(255, 255, 255, 1)",
+        "padding": "12px 24px",
+        "borderRadius": "10px"
+
+    },
     Select: {
         peers: {
             InternalSelection: {

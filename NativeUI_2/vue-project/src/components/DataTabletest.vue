@@ -2,11 +2,16 @@
     <!-- <n-data-table :columns="columns" :data="data" :pagination="pagination" :bordered="false" :max-height="700"
         striped /> -->
     <n-data-table :columns="columns" :data="data" :pagination="pagination" :bordered="false" striped />
+
 </template>
 
 <script>
 import { h, defineComponent } from "vue";
 import { NButton, useMessage } from "naive-ui";
+import { useElementSize } from '@vueuse/core'
+
+
+
 
 
 const createColumns = ({
@@ -61,16 +66,28 @@ const data = [
 
 export default defineComponent({
     setup() {
+
+        const el = ref(null)
+        const { width, height } = useElementSize(el)
+
         const message = useMessage();
         window.$message = useMessage()
         return {
+            el,
+            width,
+            height,
+
+
             data,
             columns: createColumns({
                 play(row) {
                     message.info(`Play ${row.title}`);
                 }
             }),
-            pagination: false
+            // 分頁
+            pagination: {
+                pageSize: 10
+            }
         };
     }
 });
