@@ -70,14 +70,14 @@
         <!-- 測試用 連往管理者後台 -->
         <router-link to="/admin">
           <div class="test-button">
-            ～go to admin後台～
+            admin後台
           </div>
         </router-link>
 
         <!-- 測試用 連往會員後台 -->
         <router-link to="/menber">
           <div class="test-button">
-            卐 煞氣 a 會員後台 卍
+            會員後台
           </div>
         </router-link>
 

@@ -1,9 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 import validator from "validator";
 
 //          = 轉成可以對資料做操作的model 再匯出
-const schma = new mongoose.Schema({
+const schema = new mongoose.Schema({
     account: {
+        // __v: { type: Number, select: false }, // test
         type: String,
         // 最小最大字串長度
         minlength: [6, '少於8個英文或數字'],
@@ -29,7 +30,8 @@ const schma = new mongoose.Schema({
 
     },
     email: {
-        validator() { }
+        type: String,
+        // validator() { }
     },
     phone: {
         type: String,
@@ -43,8 +45,22 @@ const schma = new mongoose.Schema({
         trim: true,
     },
 
-    token: {},
 
-}/* , { versionKey: false } // 不使用版本控制 */)
+    // copy 還沒看懂token功能
+    tokens: {
+        type: [String]
+    },
+    role: {
+        // 0 = 使用者
+        // 1 = 管理員
+        type: Number,
+        default: 0
+    }
 
-export default mongoose.model('users', Schema)
+},
+    // why不用預設的
+    { versionKey: false }
+
+) // 不使用版本控制
+
+export default mongoose.model('users', schema)

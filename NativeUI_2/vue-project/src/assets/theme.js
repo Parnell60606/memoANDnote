@@ -3,6 +3,8 @@
  * @type import('naive-ui').GlobalThemeOverrides
  */
 
+
+// 淡褐色
 const lightBrown = "#F0F0EAFF"
 
 
@@ -18,7 +20,9 @@ const themeOverrides = {
     Button: {
         // textColor: '#FF0000'
         textColor: '#ffffff',
-        "colorHover": "#FF000000"
+        "colorHover": "#FF000000",
+        "borderHover": "1px solid #aaffff",
+
 
     },
     "Dialog": {

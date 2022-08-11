@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose'
-import users from './models/users'
+import users from './models/users.js'
 
 // DB_URL是環境變數可以自己設
 mongoose.connect(process.env.DB_URL)
