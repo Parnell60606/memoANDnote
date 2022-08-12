@@ -15,7 +15,6 @@ const schema = new mongoose.Schema({
         unique: true,
         // 驗證格式  \w 匹配字母、数字、底線。等於 [A-Za-z0-9_]
         /* 
-
             $	匹配输入字符串的结尾位置。如果设置了 RegExp 对象的 Multiline 属性，则 $ 也匹配 '\n' 或 '\r'。
             +	匹配前面的子表达式一次或多次。例如，zo+ 能匹配 "zo" 以及 "zoo"，但不能匹配 "z"。+ 等价于 {1,}。
             ^開始$結束

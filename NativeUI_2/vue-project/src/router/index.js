@@ -1,3 +1,5 @@
+/* 網頁連結 頁面切換 */
+
 import { createRouter, createWebHistory } from 'vue-router'
 import FrontLayout from '../views/FrontLayout.vue'
 import AdminLayout from '../views/AdminLayout.vue'
