@@ -1,12 +1,23 @@
 import 'dotenv/config'
+// 開網站即可接收資料
 import express from 'express'
+// mongoDB操作工具
 import mongoose from 'mongoose'
-import users from './models/users.js'
+// 跨域套件
+import cors from 'cors'
+import usersRoute from './routes/users.js'
 
+
+// 連接mondoDB (網址放在.env)
 // DB_URL是環境變數可以自己設
 mongoose.connect(process.env.DB_URL)
 
 const app = express()
+
+// 讀取 req.body 的 json
+app.use(express.json())
+
+app.use('/users', usersRoute)
 
 // 請求方法 (post進 根目錄 的請求會引用這個function)
 app.post('/')
