@@ -1,13 +1,15 @@
 /* 網頁連結 頁面切換 */
 
-import { createRouter, createWebHistory } from 'vue-router'
+// import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import FrontLayout from '../views/FrontLayout.vue'
 import AdminLayout from '../views/AdminLayout.vue'
 import MenberLayout from '../views/MenberLayout.vue'
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL), // HTML5 History API (要寫後端路由不然重新整理會404)
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     /* 首頁(第一頁)--------------------------------------------------------------------------- */
     {

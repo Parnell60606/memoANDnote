@@ -1,11 +1,15 @@
-import users from '../models/users.js';
+// import users from '../models/users.js';
 
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import products from '../models/products.js'
+//  // 密碼加密套件 (避免被駭看光光)
+// import bcrypt from 'bcrypt'
+// import jwt from 'jsonwebtoken'
+// import products from '../models/products.js'
+
+
 
 // 0621版本
-export const register = async (req, res) => {
+// 註冊  creat new user
+/* export const register = async (req, res) => {
     try {
         let result = await users.create(req.body)
         // 將 mongoose 文件格式轉成一般 JSON 物件
@@ -24,6 +28,8 @@ export const register = async (req, res) => {
         }
     }
 }
+
+
 
 
 // 0620版本
@@ -224,3 +230,114 @@ export const getCart = async (req, res) => {
     }
 }
  */
+
+
+
+/* copy */
+
+
+import users from '../models/users.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+export const register = async (req, res) => {
+    const password = req.body.password
+    // 驗證密碼
+    if (!password) {
+        return res.status(400).send({ success: false, message: '缺少密碼欄位' })
+    }
+    if (password.length < 4) {
+        return res.status(400).send({ success: false, message: '密碼必須 4 個字以上' })
+    }
+    if (password.length > 16) {
+        return res.status(400).send({ success: false, message: '密碼必須 16 個字以下' })
+    }
+    if (!password.match(/^\w[^\W]+$/)) {
+        return res.status(400).send({ success: false, message: ' (controllers) 密碼格式錯誤' })
+    }
+    // bcrypt 密碼加密
+    // 因為密碼會存成這樣："$2b$10$643StLWhLHl2dlcMjXsGWOgyUVLiSHdL..bTaqIozwS8GzFEzVP.G"  所以schema的密碼驗證不能放正則表達式(和其他字數限制)
+    req.body.password = bcrypt.hashSync(password, 10)
+    try {
+        // 創建帳號
+        await users.create(req.body)
+        res.status(200).send({ success: true, message: '' })
+    } catch (error) {
+        if (error.name === 'ValidationError') {
+            const key = Object.keys(error.errors)[0]
+            const message = error.errors[key].message
+            return res.status(400).send({ success: false, message })
+        } else if (error.name === 'MongoServerError' && error.code === 11000) {
+            res.status(400).send({ success: false, message: '帳號已存在' })
+        } else {
+            res.status(500).send({ success: false, message: '伺服器錯誤' })
+        }
+    }
+}
+
+// 登入成功的話給token
+/* export const login = async (req, res) => {
+    try {
+        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
+        req.user.tokens.push(token)
+        await req.user.save()
+        res.status(200).send({
+            success: true,
+            message: '',
+            result: {
+                token,
+                account: req.user.account,
+                email: req.user.email,
+                role: req.user.role
+            }
+        })
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+}
+
+// 登出拿掉token
+export const logout = async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter(token => token !== req.token)
+        await req.user.save()
+        res.status(200).send({ success: true, message: '' })
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+} 
+
+export const extend = async (req, res) => {
+    try {
+        const idx = req.user.tokens.findIndex(token => token === req.token)
+        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
+        req.user.tokens[idx] = token
+        await req.user.save()
+        res.status(200).send({ success: true, message: '', result: token })
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+}
+*/
+
+
+
+// 抓會員
+
+export const getUser = (req, res) => {
+    try {
+        res.status(200).send({
+            success: true,
+            message: '',
+            result: {
+                account: req.user.account,
+                email: req.user.email,
+                role: req.user.role
+            }
+        })
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+}
+
+

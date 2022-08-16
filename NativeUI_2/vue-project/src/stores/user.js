@@ -1,18 +1,25 @@
 /* 會員登入 */
 
-import { defineStore } from 'pinia'  // 定義一個 ID 為 user 的 store
+import { defineStore } from 'pinia'
 import { api, apiAuth } from '@/plugins/axios'
+
+
+// 在 pinia 這樣寫 useRouter() 會是 undefined
+// import { useRouter } from 'vue-router'
 import router from '../router'  // 抓 router資烙夾
 
-// 測試用
+
+// 測試用 
 import Swal from 'sweetalert2'  // 之後再改寫
 
 
-/* ↓ 老師ㄉ扣 copy */
+// 定義一個 ID 為 user 的 store
 export const useUserStore = defineStore({
     // 初始狀態，使用箭頭函式
     id: 'user',
     state: () => ({
+        // 把頁面上會用到的資料放這邊
+        // 所有這些屬性都將自動推斷其類型
         token: '',
         account: '',
         role: 0,

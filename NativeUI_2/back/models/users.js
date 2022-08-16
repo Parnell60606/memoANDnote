@@ -8,32 +8,32 @@ const schema = new mongoose.Schema({
         // 資料型態
         type: String,
         // 最小最大字串長度
-        minlength: [8, '少於8個英文或數字'],
-        maxlength: [20, '多於20個英文或數字'],
+        minlength: [5, '少於8個英文或數字'],
+        maxlength: [15, '多於20個英文或數字'],
         // 傳進來的[必填和錯誤訊息]
-        require: [true, '帳號請輸入8~16個英文或數字'],
+        require: [true, '帳號請輸入5~15個英文或數字'],
         // 唯一性驗證 帳號只能註冊一次
         unique: true,
 
-        // 驗證格式  \w 匹配字母、数字、底線。等於 [A-Za-z0-9_]
+        // 驗證格式  \w 匹配字母、数字、底線。等於 [A-Za-z0-9_] 
         /* 
             $	匹配输入字符串的结尾位置。如果设置了 RegExp 对象的 Multiline 属性，则 $ 也匹配 '\n' 或 '\r'。
             +	匹配前面的子表达式一次或多次。例如，zo+ 能匹配 "zo" 以及 "zoo"，但不能匹配 "z"。+ 等价于 {1,}。
             ^開始$結束
             */
-        //    [^_ ]不包含底線跟空格
+        //    [^\W] 不包含「代表除了所有字母、數字及底線以外的字元」
         // 正則表達式驗證
-        match: [/^\w[^_ ]+$/, '帳號格式錯誤']
+        match: [/^\w[^\W]+$/, '密碼格式錯誤(schema)']
 
     },
     password: {
         type: String,
-        require: [true, '請輸入8~16個英文或數字'],
-        unique: '信箱已使用',
-
+        require: [true, '請輸入5~15個英文或數字'],
+        // match: [/^\w[^\W]+$/, '密碼格式錯誤(schema_match_password)']  //  擋了就不能放 bcrypt
     },
     email: {
         type: String,
+        unique: '信箱已使用',
         // 自訂驗證規則 COPY
         validate: {
             // 驗證 function
@@ -46,11 +46,14 @@ const schema = new mongoose.Schema({
     },
     phone: {
         type: String,
+        require: [true, '請輸入電話號碼'],
         maxlength: [20, '手機或電話號碼過長'],
         match: [/^[0-9]+$/, '請輸入數字']
     },
+
     name: {
         type: String,
+        maxlength: [10, '用戶名稱過長'],
         // 刪除前後空格
         trim: true,
     },
@@ -88,3 +91,4 @@ const schema = new mongoose.Schema({
 
 //             mongoose.model(collection 名稱, Schema)
 export default mongoose.model('users', schema)
+// 把schema轉成可以操作的 model (固定寫法)
