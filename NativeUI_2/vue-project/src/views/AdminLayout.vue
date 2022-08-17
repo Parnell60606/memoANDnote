@@ -14,7 +14,9 @@
                     content-style="padding: 40px;" :native-scrollbar="false" bordered>
 
 
-                    <div id="admin-title">管理者後台</div>
+                    <RouterLink to="/admin">
+                        <div id="admin-title">管理者後台</div>
+                    </RouterLink>
 
                     <nav>
 

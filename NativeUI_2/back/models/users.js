@@ -29,7 +29,7 @@ const schema = new mongoose.Schema({
     password: {
         type: String,
         require: [true, '請輸入5~15個英文或數字'],
-        // match: [/^\w[^\W]+$/, '密碼格式錯誤(schema_match_password)']  //  擋了就不能放 bcrypt
+        // match: [/^\w[^\W]+$/, '密碼格式錯誤(schema_match_password)']  //  擋了就不能放 bcrypt ，密碼在controller驗證
     },
     email: {
         type: String,
@@ -58,6 +58,11 @@ const schema = new mongoose.Schema({
         trim: true,
     },
 
+    // 使用者大頭貼
+    avatar: {
+        type: String,
+    },
+
 
     // copy 還沒看懂token功能
     tokens: {
@@ -74,7 +79,7 @@ const schema = new mongoose.Schema({
     pastOrders: {
         type: [
             {
-                Order: {
+                order: {
                     type: mongoose.ObjectId,
                     ref: 'order',
                 }

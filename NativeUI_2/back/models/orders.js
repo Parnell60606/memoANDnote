@@ -1,11 +1,24 @@
 import mongoose from "mongoose";
+/* 
+1.測試能不能撈
+要怎麼撈user資料ㄚ
+*/
 
 const schema = new mongoose.Schema({
     user: {
+        // id name email phone
+        // 要怎麼回傳user 除了id以外ㄉ其他欄位
         type: mongoose.ObjectId,
         ref: 'users',
         required: [true, '使用者未登入']
     },
+
+    userName: {
+        type: mongoose.ObjectId,
+    },
+
+
+
     // orderDetails: [{
     /*  人數  預訂時間  備註   */
     numberOfPeople: {
@@ -39,7 +52,7 @@ const schema = new mongoose.Schema({
     timestamps: true
     // createdAt: 表示此文檔創建時間的日期
     // updatedAt：表示此文檔上次更新時間的日期
-    // 查詢方式看mongoose官方文件的 timestamp
+    // 查詢方式看mongoose官方文件的 Timestamps
 })
 
 //             mongoose.model(collection 名稱, Schema)

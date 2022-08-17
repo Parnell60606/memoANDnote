@@ -28,11 +28,12 @@
         }
     }
 }
+*/
 
 
 
 
-// 0620版本
+// 0620版本   controller放在index
 /*
 export const register = async (req, res) => {
     try {
@@ -148,7 +149,7 @@ export const getUser = (req, res) => {
     }
 } */
 
-// 目前沒有Cart
+// 目前沒有Cart    (但是有Order)
 /* 
 export const addCart = async (req, res) => {
     try {
@@ -233,6 +234,8 @@ export const getCart = async (req, res) => {
 
 
 
+
+
 /* copy */
 
 
@@ -240,6 +243,7 @@ import users from '../models/users.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+// 註冊 (O)
 export const register = async (req, res) => {
     const password = req.body.password
     // 驗證密碼
@@ -257,7 +261,12 @@ export const register = async (req, res) => {
     }
     // bcrypt 密碼加密
     // 因為密碼會存成這樣："$2b$10$643StLWhLHl2dlcMjXsGWOgyUVLiSHdL..bTaqIozwS8GzFEzVP.G"  所以schema的密碼驗證不能放正則表達式(和其他字數限制)
+
+    //                bcrypt . sync同步hash寫法 (password, 加鹽次數)   
     req.body.password = bcrypt.hashSync(password, 10)
+
+
+
     try {
         // 創建帳號
         await users.create(req.body)
@@ -305,7 +314,7 @@ export const logout = async (req, res) => {
     } catch (error) {
         res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
-} 
+}
 
 export const extend = async (req, res) => {
     try {
@@ -322,9 +331,12 @@ export const extend = async (req, res) => {
 
 
 
-// 抓會員
 
-export const getUser = (req, res) => {
+
+
+// 抓會員  0718版
+
+/* export const getUser = (req, res) => {
     try {
         res.status(200).send({
             success: true,
@@ -336,8 +348,100 @@ export const getUser = (req, res) => {
             }
         })
     } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
+        res.status(500).send({ success: false, message: '伺服器錯誤(getUser)' })
+    }
+}
+ */
+
+
+// 用會員id查會員  0621   (O)
+// 0621 的user schema : account, email, password, cart 四個欄位 
+export const getUser = async (req, res) => {
+    try {
+        // 傳該會員的所有資料(除了password)
+        const result = await users.findById(req.params.id, ' name email phone')
+        if (!result) {
+            res.status(404).json({ success: false, message: '找不到資料' })
+        } else {
+            res.status(200).json({ success: true, message: '', result })
+        }
+    } catch (error) {
+        if (error.name === 'CastError') {
+            res.status(404).json({ success: false, message: '找ㄅ到資料' })
+        } else {
+            res.status(500).json({ success: false, message: '查詢失敗' })
+        }
+
     }
 }
 
 
+// NEW
+/* export const getUser = (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: '',
+        result: {
+            _id: req.user._id,
+            account: req.user.account,
+            avatar: req.user.avatar
+        }
+    })
+} */
+
+
+
+
+// 加訂單 0621版
+
+export const addCart = async (req, res) => {
+    try {
+        // let result = await users.findByIdAndUpdate(req.params.id, {
+        //   $push: { cart: req.body }
+        // }, { new: true, runValidators: true })
+        // if (!result) {
+        //   res.status(404).json({ success: false, message: '找不到資料' })
+        // } else {
+        //   result = result.toObject()
+        //   delete result.password
+        //   res.status(200).json({ success: true, message: '', result })
+        // }
+
+        // 檢查有沒有指定商品
+        const product = await products.findById(req.body.p_id)
+        if (!product) {
+            res.status(404).json({ success: false, message: '找不到商品' })
+            return
+        }
+        // 用 ID 找使用者
+        const result = await users.findById(req.params.id, '-password')
+        if (!result) {
+            res.status(404).json({ success: false, message: '找不到使用者' })
+            return
+        }
+        // 尋找使用者的購物車有沒有這個商品
+        const idx = result.cart.findIndex(item => item.p_id.toString() === req.body.p_id)
+        if (idx === -1) {
+            // 沒有就 push 進去
+            result.cart.push(req.body)
+        } else {
+            // 有的話，增加數量
+            result.cart[idx].quantity += req.body.quantity
+        }
+        // 保存
+        await result.save()
+        res.status(200).json({ success: true, message: '', result })
+    } catch (error) {
+        console.log(error)
+        if (error.name === 'ValidationError') {
+            const key = Object.keys(error.errors)[0]
+            const message = error.errors[key].message.replace('Validation failed: ', '').split(':').slice(1).join().trim()
+            console.log(message)
+            res.status(400).json({ success: false, message })
+        } else if (error.name === 'CastError') {
+            res.status(404).json({ success: false, message: '找不到資料' })
+        } else {
+            res.status(500).json({ success: false, message: '查詢失敗' })
+        }
+    }
+}

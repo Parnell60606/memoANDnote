@@ -19,7 +19,7 @@ mongoose.connect(process.env.DB_URL)
 
 const app = express()
 
-// 讀取 req.body 的 json
+// 讀取 req.body 的 json (抓post資料)
 app.use(express.json())
 
 app.use('/users', usersRouter)
