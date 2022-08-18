@@ -5,7 +5,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 // 跨域套件
 import cors from 'cors'
+
 import usersRouter from './routes/users.js'
+import ordersRouter from './routes/users.js'
 
 
 // 用INDEX測試controll
@@ -23,11 +25,11 @@ const app = express()
 app.use(express.json())
 
 app.use('/users', usersRouter)
+app.use('/orders', ordersRouter)
+
 
 // 請求方法 (post進 根目錄 的請求會引用這個function)
 // app.post('/')
-
-
 
 
 
@@ -53,7 +55,7 @@ app.use('/users', usersRouter)
 //         } else if (error.name === 'MongoServerError' && error.code === 11000) {
 //             res.status(409).json({ success: false, message: '帳號已存在' })
 //         } else {
-//             res.status(500).json({ success: false, message: '伺服器錯誤' })
+//             res.status(500).json({ success: false, message: '伺服器錯誤(index)' })
 //         }
 //     }
 // })

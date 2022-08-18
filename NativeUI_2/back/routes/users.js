@@ -13,7 +13,7 @@ import {
 const router = express.Router()
 
 // router.post('/', content('application/json'), register)
-router.post('/', content('application/json'), register)
+router.post('/', register)
 router.get('/:id', getUser)
 
 

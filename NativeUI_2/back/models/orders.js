@@ -13,10 +13,6 @@ const schema = new mongoose.Schema({
         required: [true, '使用者未登入']
     },
 
-    userName: {
-        type: mongoose.ObjectId,
-    },
-
 
 
     // orderDetails: [{

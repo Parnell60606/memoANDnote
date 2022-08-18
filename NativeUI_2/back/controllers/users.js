@@ -359,7 +359,7 @@ export const extend = async (req, res) => {
 export const getUser = async (req, res) => {
     try {
         // 傳該會員的所有資料(除了password)
-        const result = await users.findById(req.params.id, ' name email phone')
+        const result = await users.findById(req.params.id, ' userName email phone')
         if (!result) {
             res.status(404).json({ success: false, message: '找不到資料' })
         } else {

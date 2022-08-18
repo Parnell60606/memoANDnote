@@ -9,33 +9,43 @@
       <n-layout-header>
 
         <n-space justify=" space-between">
-          <n-tabs type="bar" size="large">
-            <n-tab name="關於我們">
-              <router-link to="/about">
-                關於我們
-              </router-link>
-            </n-tab>
-            <n-tab name="菜單">
-              <router-link to="/menu">
-                菜單
-              </router-link>
-            </n-tab>
-            <n-tab name="位置">
-              <router-link to="/location">
-                位置
-              </router-link>
-            </n-tab>
-            <n-tab name="訂位">
-              <router-link to="/booking">
-                訂位
-              </router-link>
-            </n-tab>
-            <n-tab name="聯絡我們">
-              <router-link to="/contactus">
-                聯絡我們
-              </router-link>
-            </n-tab>
-          </n-tabs>
+
+          <n-space :size="48">
+
+            <router-link to="/">
+              <img src="../assets/copy_somepeoples_logo_white_onlyfont.svg" width="40" alt="logo">
+            </router-link>
+
+
+            <n-tabs type="bar" size="large">
+              <n-tab name="關於我們">
+                <router-link to="/about">
+                  關於我們
+                </router-link>
+              </n-tab>
+              <n-tab name="菜單">
+                <router-link to="/menu">
+                  菜單
+                </router-link>
+              </n-tab>
+              <n-tab name="位置">
+                <router-link to="/location">
+                  位置
+                </router-link>
+              </n-tab>
+              <n-tab name="訂位">
+                <router-link to="/booking">
+                  訂位
+                </router-link>
+              </n-tab>
+              <n-tab name="聯絡我們">
+                <router-link to="/contactus">
+                  聯絡我們
+                </router-link>
+              </n-tab>
+            </n-tabs>
+
+          </n-space>
 
 
 
