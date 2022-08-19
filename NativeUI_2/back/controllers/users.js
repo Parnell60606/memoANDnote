@@ -34,7 +34,7 @@
 
 
 // 0620版本   controller放在index
-/*
+/* 
 export const register = async (req, res) => {
     try {
         if (!req.body.password || req.body.password.length < 8 || req.body.password.length > 20) {
@@ -54,194 +54,13 @@ export const register = async (req, res) => {
 } */
 
 
-// test 老師檔案
-/* export const register = async (req, res) => {
-    const password = req.body.password
-    if (!password) {
-        return res.status(400).send({ success: false, message: '缺少密碼欄位' })
-    }
-    if (password.length < 8) {
-        return res.status(400).send({ success: false, message: '密碼必須 4 個字以上' })
-    }
-    if (password.length > 20) {
-        return res.status(400).send({ success: false, message: '密碼必須 20 個字以下' })
-    }
-    if (!password.match(/^[A-Za-z0-9]+$/)) {
-        return res.status(400).send({ success: false, message: '密碼格式錯誤' })
-    }
-    req.body.password = bcrypt.hashSync(password, 10)
-    try {
-        await users.create(req.body)
-                // 設定回應狀態碼200，並把新增的資料回傳
-        // res.status(200)
-        // res.json(result)
-        res.status(200).send({ success: true, message: '' })
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            const key = Object.keys(error.errors)[0]
-            const message = error.errors[key].message
-            return res.status(400).send({ success: false, message })
-        } else if (error.name === 'MongoServerError' && error.code === 11000) {
-            res.status(400).send({ success: false, message: '帳號已存在' })
-        } else {
-            res.status(500).send({ success: false, message: '伺服器錯誤' })
-        }
-    }
-}
-
-export const login = async (req, res) => {
-    try {
-        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
-        req.user.tokens.push(token)
-        await req.user.save()
-        res.status(200).send({
-            success: true,
-            message: '',
-            result: {
-                token,
-                account: req.user.account,
-                email: req.user.email,
-                cart: req.user.cart.length,
-                role: req.user.role
-            }
-        })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-}
-
-export const logout = async (req, res) => {
-    try {
-        req.user.tokens = req.user.tokens.filter(token => token !== req.token)
-        await req.user.save()
-        res.status(200).send({ success: true, message: '' })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-}
-
-export const extend = async (req, res) => {
-    try {
-        const idx = req.user.tokens.findIndex(token => token === req.token)
-        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
-        req.user.tokens[idx] = token
-        await req.user.save()
-        res.status(200).send({ success: true, message: '', result: token })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-}
-
-export const getUser = (req, res) => {
-    try {
-        res.status(200).send({
-            success: true,
-            message: '',
-            result: {
-                account: req.user.account,
-                email: req.user.email,
-                cart: req.user.cart.length,
-                role: req.user.role
-            }
-        })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-} */
-
-// 目前沒有Cart    (但是有Order)
-/* 
-export const addCart = async (req, res) => {
-    try {
-        // 驗證商品
-        const result = await products.findById(req.body.product)
-        // 沒找到或已下架
-        if (!result || !result.sell) {
-            return res.status(404).send({ success: false, message: '商品不存在' })
-        }
-        // 找購物車有沒有這個商品
-        const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
-        if (idx > -1) {
-            req.user.cart[idx].quantity += req.body.quantity
-        } else {
-            req.user.cart.push({
-                product: req.body.product,
-                quantity: req.body.quantity
-            })
-        }
-        await req.user.save()
-        res.status(200).send({ success: true, message: '', result: req.user.cart.length })
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            const key = Object.keys(error.errors)[0]
-            const message = error.errors[key].message
-            return res.status(400).send({ success: false, message })
-        } else {
-            res.status(500).send({ success: false, message: '伺服器錯誤' })
-        }
-    }
-}
-
-export const editCart = async (req, res) => {
-    try {
-        if (req.body.quantity <= 0) {
-            await users.findOneAndUpdate(
-                { _id: req.user._id, 'cart.product': req.body.product },
-                {
-                    $pull: {
-                        cart: { product: req.body.product }
-                    }
-                }
-            )
-            // const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
-            // req.user.cart.splice(idx, 1)
-            // await req.user.save()
-        } else {
-            await users.findOneAndUpdate(
-                { _id: req.user._id, 'cart.product': req.body.product },
-                {
-                    $set: {
-                        // $ 代表符合陣列搜尋條件的索引
-                        'cart.$.quantity': req.body.quantity
-                    }
-                }
-            )
-            // const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
-            // req.user.cart[idx].quantity = req.body.quantity
-            // await req.user.save()
-        }
-        res.status(200).send({ success: true, message: '' })
-    } catch (error) {
-        if (error.name === 'ValidationError') {
-            const key = Object.keys(error.errors)[0]
-            const message = error.errors[key].message
-            return res.status(400).send({ success: false, message })
-        } else {
-            res.status(500).send({ success: false, message: '伺服器錯誤' })
-        }
-    }
-}
-
-export const getCart = async (req, res) => {
-    try {
-        const result = await users.findById(req.user._id, 'cart').populate('cart.product')
-        res.status(200).send({ success: true, message: '', result: result.cart })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-}
- */
-
-
-
-
 
 /* copy */
 
 
 import users from '../models/users.js'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'  // passport-jwt套件中有，不用另外安裝
 
 // 註冊 (O)
 export const register = async (req, res) => {
@@ -266,7 +85,6 @@ export const register = async (req, res) => {
     req.body.password = bcrypt.hashSync(password, 10)
 
 
-
     try {
         // 創建帳號
         await users.create(req.body)
@@ -284,51 +102,60 @@ export const register = async (req, res) => {
     }
 }
 
-// 登入成功的話給token
-/* export const login = async (req, res) => {
+
+// 0627   登入
+// 放_id就好，不要把重要的東西放裡面
+export const login = async (req, res) => {
     try {
-        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
+        // jwt.sign(資料, secret, 設定)
+        const token = jwt.sign({ _id: req.user._id.toString() }, process.env.JWT_SECRET,
+            { expiresIn: '7 days' } // 多久後過期
+        )
         req.user.tokens.push(token)
         await req.user.save()
-        res.status(200).send({
-            success: true,
-            message: '',
-            result: {
-                token,
-                account: req.user.account,
-                email: req.user.email,
-                role: req.user.role
-            }
-        })
+        //                   (登入成功的話回傳token)
+        res.status(200).json({ success: true, message: '', token })
     } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
+        res.status(500).json({ success: false, message: '伺服器錯誤' })
     }
 }
 
-// 登出拿掉token
-export const logout = async (req, res) => {
+
+// get
+// get跟 delete不能放body
+// get不能用  req.body  (因為用postman傳進去的資料不是用body是用路由傳的)
+// 所以是 req.params
+
+export const getUser = async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter(token => token !== req.token)
-        await req.user.save()
-        res.status(200).send({ success: true, message: '' })
+        // 傳該會員的所有資料(除了password)
+        const result = await users.findById(req.params.id)
+        if (!result) {
+            res.status(404).json({ success: false, message: '找不到資料' })
+        } else {
+            res.status(200).json({ success: true, message: '', result })
+        }
     } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
+        if (error.name === 'CastError') {
+            res.status(404).json({ success: false, message: '找ㄅ到資料 (CastError)' })
+        } else {
+            res.status(500).json({ success: false, message: '查詢失敗' })
+        }
     }
 }
 
-export const extend = async (req, res) => {
-    try {
-        const idx = req.user.tokens.findIndex(token => token === req.token)
-        const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
-        req.user.tokens[idx] = token
-        await req.user.save()
-        res.status(200).send({ success: true, message: '', result: token })
-    } catch (error) {
-        res.status(500).send({ success: false, message: '伺服器錯誤' })
-    }
-}
-*/
 
+export const getData = (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: '',
+        result: {
+            _id: req.user._id,
+            account: req.user.account,
+            avatar: req.user.avatar
+        }
+    })
+}
 
 
 
@@ -355,11 +182,11 @@ export const extend = async (req, res) => {
 
 
 // 用會員id查會員  0621   (O)
-// 0621 的user schema : account, email, password, cart 四個欄位 
-export const getUser = async (req, res) => {
+// 0621 的user schema : account, email, password, cart 四個欄位
+/* export const getUser = async (req, res) => {
     try {
         // 傳該會員的所有資料(除了password)
-        const result = await users.findById(req.params.id, ' userName email phone')
+        const result = await users.findById(req.params.id, ' userName email phone ')
         if (!result) {
             res.status(404).json({ success: false, message: '找不到資料' })
         } else {
@@ -367,13 +194,13 @@ export const getUser = async (req, res) => {
         }
     } catch (error) {
         if (error.name === 'CastError') {
-            res.status(404).json({ success: false, message: '找ㄅ到資料' })
+            res.status(404).json({ success: false, message: '找ㄅ到資料 (CastError)' })
         } else {
             res.status(500).json({ success: false, message: '查詢失敗' })
         }
 
     }
-}
+} */
 
 
 // NEW
@@ -394,7 +221,7 @@ export const getUser = async (req, res) => {
 
 // 加訂單 0621版
 
-export const addCart = async (req, res) => {
+/* export const addCart = async (req, res) => {
     try {
         // let result = await users.findByIdAndUpdate(req.params.id, {
         //   $push: { cart: req.body }
@@ -445,3 +272,4 @@ export const addCart = async (req, res) => {
         }
     }
 }
+ */

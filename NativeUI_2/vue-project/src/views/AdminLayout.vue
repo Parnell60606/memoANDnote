@@ -35,13 +35,11 @@
                         <n-h2>- 已取消</n-h2>
                         <n-divider />
 
-                        <n-h2>訂位管理</n-h2>
+                        <n-h2>新增現場訂單</n-h2>
 
                         <RouterLink to="/backgrounddata">
                             <n-h2>觀看數據</n-h2>
                         </RouterLink>
-
-                        <n-button>輸入前台訂位（？）</n-button>
 
                         <br>
 

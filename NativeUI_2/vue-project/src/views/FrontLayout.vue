@@ -3,7 +3,7 @@
   <!-- <n-config-provider :theme-overrides="themeOverrides" inline-theme-disabled preflight-style-disabled> -->
   <n-config-provider :theme-overrides="themeOverrides">
 
-    <n-layout style="height: 100vh; background:antiquewhite; position: relative;">
+    <n-layout style="height: 100vh; background:antiquewhite;" :native-scrollbar="false">
 
       <!-- topbar ----------------------------------------------------------------------------->
       <n-layout-header>
@@ -75,8 +75,33 @@
 
       <!-- Footer ----------------------------------------------------------------------------->
       <n-layout-footer>
-        敷忒r
 
+        <n-space justify="space-around" :size="72">
+
+          <img src="../assets/copy_somepeoples_logo_white.svg" width="100" alt="logo">
+
+          <div class="footer-menu">
+            <p>首頁</p>
+            <p>關於我們</p>
+            <p>位置</p>
+            <p>訂位</p>
+            <p>聯絡我們</p>
+
+          </div>
+
+          <div class="footer-contact">
+            <p>地址：24302新北市泰山區貴子里<br>致遠新村55之1號</p>
+            <p>電話：02-0000-0000</p>
+            <p>傳真：02-0000-0000</p>
+            <p>admin@address.com </p>
+
+          </div>
+
+        </n-space>
+
+
+
+        <br>
         <!-- 測試用 連往管理者後台 -->
         <router-link to="/admin">
           <div class="test-button">

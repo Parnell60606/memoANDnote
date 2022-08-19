@@ -18,5 +18,5 @@ const router = express.Router()
 // router.post('/', auth.jwt, createOrder)
 
 // router.post('/order', createOrder)
-router.post('/order', content('application/json'), createOrder)
+router.post('/order', createOrder)
 

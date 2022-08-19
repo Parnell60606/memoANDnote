@@ -12,7 +12,8 @@
 
           </p>
         </div>
-        <img src="https://picsum.photos/250/250/?random=8">
+        <img src="../../assets/picture/mountain.jpg" width="250" alt="">
+        <!-- <img src="https://picsum.photos/250/250/?random=8"> -->
         <div class="col-2"></div>
       </div>
 

@@ -1,5 +1,5 @@
 <template>
-    <h1>今天～的～訂單～</h1>
+    <h1>今天的訂單</h1>
     <!-- <n-space justify="space-around"> -->
     <!-- <n-space justify="center"> -->
 

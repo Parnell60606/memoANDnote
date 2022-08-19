@@ -1,3 +1,6 @@
 <template>
-    <h1>～連絡我悶～</h1>
+    <h1>聯絡我們</h1>
+
+    <n-divider />
+
 </template>
