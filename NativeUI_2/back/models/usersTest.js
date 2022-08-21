@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         // 自訂驗證function
         validate: {
-            validator(value) {
+            validator (value) {
                 return validator.isEmail(value)
             },
             message: '信箱格式錯誤'

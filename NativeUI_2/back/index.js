@@ -40,7 +40,7 @@ app.use('/users', usersRouter)
 
 // 上面不符合的所有請求方式及所有路徑顯示 404
 app.all('*', (req, res) => {
-    res.status(404).send({ success: false, message: '找不到 404 404' })
+    res.status(404).send({ success: false, message: '找不到 404 (index)' })
 })
 
 

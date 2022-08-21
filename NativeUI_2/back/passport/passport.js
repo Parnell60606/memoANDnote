@@ -1,5 +1,4 @@
 /* 登入驗證策略 */
-/* 沒有登入逾期 跟 驗證錯誤 (0704檔案有) */
 
 import passport from 'passport'  // 整合驗證方法的套件
 import passportJWT from 'passport-jwt'
@@ -12,6 +11,9 @@ const LocalStrategy = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 
+
+
+// 登入時去資料庫找有沒有這個帳號
 // 使用LocalStrategy的驗證策略，去新增一個名為 login 的驗證方式，
 passport.use('login', new LocalStrategy({
     // LocalStrategy 也可以自訂欄位名稱
@@ -44,7 +46,7 @@ passport.use('login', new LocalStrategy({
 
 
 
-// 新增一個名為 jwt 的驗證方式，使用 JWT 策略
+// 新增一個名為 jwt 的驗證方式，使用 JWT 策略  (驗證jwt對不對)
 passport.use('jwt', new JWTStrategy({
     // 從 headers (AuthHeader) 提取 Bearer Token
     // 對應postman的 Bearer Token

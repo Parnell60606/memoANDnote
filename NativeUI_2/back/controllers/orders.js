@@ -19,11 +19,10 @@ import orders from '../models/orders.js'
             return res.status(400).send({ success: false, message: '包含下架商品' })
         }
 
-
         // 新增訂單  欄位：
-        // { 
-        //    user: req.user._id, 
-        //    products: req.user.cart 
+        // {
+        //    user: req.user._id,
+        //    products: req.user.cart
         //  }
 
         result = await orders.create({ user: req.user._id, products: req.user.cart })
@@ -32,7 +31,6 @@ import orders from '../models/orders.js'
         // 把修好的值傳回數據庫
         await req.user.save()
 
-
         // 回傳訂單id
         // 前台在抓id做其他操作 (在前台應該就是order._idㄅ)
         res.status(200).send({ success: true, message: '', result: result._id })
@@ -40,7 +38,6 @@ import orders from '../models/orders.js'
         res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
 } */
-
 
 /* memo
     檢查有沒有重複訂單
@@ -56,12 +53,9 @@ import orders from '../models/orders.js'
 
     2.放前台傳的其他訂單細節  (人數等)
 
-
-
-    - (老師檔案做法) 傳會員id就好，後台那邊再拔使用者特定資料 (id name phone email) 
+    - (老師檔案做法) 傳會員id就好，後台那邊再拔使用者特定資料 (id name phone email)
     前台：  {{ order.user.account }}  <<顯示order裡面的user的account屬性
         */
-
 
 // export const createOrder = async (req, res) => {
 //     try {
@@ -83,8 +77,7 @@ import orders from '../models/orders.js'
 // })
 
 // 上下兩種寫法的差異?
-await orders.create(req.body)
-
+// await orders.create(req.body)
 
 // 需要ㄇ我的沒動原本的user
 // await req.user.save()
@@ -100,8 +93,6 @@ await orders.create(req.body)
 //         }
 //     }
 // }
-
-
 
 // try
 export const createOrder = async (req, res) => {
@@ -125,12 +116,7 @@ export const createOrder = async (req, res) => {
 
 
 
-
-
-
-
-
-// 查過去訂單
+//  查過去訂單
 export const getMyPastOrders = async (req, res) => {
     try {
         // 用過去訂單數量判斷user過去有沒有訂單
@@ -138,18 +124,15 @@ export const getMyPastOrders = async (req, res) => {
             return res.status(400).send({ success: false, message: '過去沒有訂單' })
         }
 
-
         // 用前台傳來的userID 來查詢 pastOrders(過去訂單)  ，populate (把fk連往另一個schema的資料也傳過來)
         let result = await users.findById(req.user._id, 'pastOrders').populate('pastOrders.order')
         // 可以使用 Population 功能通過關聯Schema的 field 找到關聯的另一個 document，並且用被關聯 document 的內容替換掉原來關聯欄位(field)的內容。
-
 
         //  新增訂單   (其他訂單資料該怎麼寫)
         result = await orders.create({
             user: req.user._id,
 
             userName: req.user._id,
-
 
             numberOfPeople: req.user.numberOfPeople,
             bookingTime: req.user.bookingTime,
@@ -168,14 +151,13 @@ export const getMyPastOrders = async (req, res) => {
 
 
 
-// 
+//
 export const getMyOrders = async (req, res) => {
     try {
-        //                     
+        //
         const result = await orders.find({ user: req.user._id }).populate('products.product')
         res.status(200).send({ success: true, message: '', result })
     } catch (error) {
         res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
 }
-
