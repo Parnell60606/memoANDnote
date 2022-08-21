@@ -207,8 +207,20 @@ export const logout = async (req, res) => {
   }
 }
 
-// token過期  舊換新
+// 0704  token過期  舊換新   (最後一版)
 
+export const extend = async (req, res) => {
+  try {
+    const idx = req.user.tokens.findIndex(token => token === req.token)
+    // 簽新的 token
+    const token = jwt.sign({ _id: req.user._id }, process.env.SECRET, { expiresIn: '7 days' })
+    req.user.tokens[idx] = token
+    await req.user.save()
+    res.status(200).send({ success: true, message: '', result: token })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
 
 
 
