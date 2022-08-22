@@ -21,7 +21,7 @@ import { useMessage } from "naive-ui";
 import RegisterView from "../views/front/RegisterView.vue";
 
 export default defineComponent({
-    setup() {
+    setup () {
         const message = useMessage();
         const showModalRef = ref(false);
         window.$message = useMessage();
