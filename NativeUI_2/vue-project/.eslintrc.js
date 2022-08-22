@@ -16,6 +16,7 @@ module.exports = {
     'vue'
   ],
   rules: {
+    'vue/script-setup-uses-vars': 'on',
     // anonymous: 'never'
     'editor.tabSize': 4
 

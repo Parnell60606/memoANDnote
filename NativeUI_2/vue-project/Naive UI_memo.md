@@ -207,7 +207,9 @@
 # n-button 按鈕
 ## props
 
-- `type`  套用該類型的按鈕顏色/類型 
+- `attr-type` input type  
+  - `'button' | 'submit' | 'reset'`  
+- `type`  套用該類型的按鈕顏色/類型  
 - `ghost` 透明背景按鈕 (有線條框)
   ```html
   <n-button type="primary">
@@ -234,6 +236,12 @@
 
 <br><br><br>
 
+# n-form
+使用 `async-validator` 套件
+
+
+<br><br><br>
+
 # n-message
 我討厭這個他規則好多
 
@@ -256,3 +264,5 @@
     message.loading("", { duration: 5000 });
 
   ```
+
+

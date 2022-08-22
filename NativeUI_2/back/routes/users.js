@@ -10,6 +10,7 @@ import content from '../middleware/content.js'
 import {
     register,
     login,
+    getUserId,
     getUser,
     getData,
     logout
@@ -32,9 +33,16 @@ router.post('/', content('application/json'), register)
 //          (路由進到/login之後，在執行 login 之前先執行 auth.login和 content('application/json') )
 //           進 /login之後，先驗證格式、驗證資料庫有沒有這個帳號，再跑實際登入
 router.post('/login', content('application/json'), auth.login, login)
-router.get('/getuser/:id', getUser)
 
 
+// res.status(200).json()
+router.get('/getuserid/:id', getUserId)
+
+// res.status(200).send()
+router.get('/getuser', auth.jwt, getUser)
+
+
+// res.status(200).json()
 // 在Authorization 用token抓
 // auth.jwt >> 驗證過期就不能get
 router.get('/me', auth.jwt, getData)

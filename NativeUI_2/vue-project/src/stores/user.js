@@ -22,7 +22,10 @@ export const useUserStore = defineStore({
         // 所有這些屬性都將自動推斷其類型
         token: '',
         account: '',
-        role: 0,
+        name: '',
+        email: '',
+        phone: '',
+        role: 0
         // cart: 0  // 我的 schema 結構沒有cart的表
     }),
     // 可以先將資料處理好用傳出

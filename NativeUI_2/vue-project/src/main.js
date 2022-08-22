@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import pinia from './plugins/pinia'
 
 
 import App from './App.vue'
 import router from './router'
+import pinia from './plugins/pinia'
 
 // vue 初始化時自動產生的檔案↓
 // import './assets/main.css'
