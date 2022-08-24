@@ -68,7 +68,7 @@ export const register = async (req, res) => {
     if (!password) {
         return res.status(400).send({ success: false, message: '缺少密碼欄位' })
     }
-    if (password.length < 7) {
+    if (password.length < 5) {
         return res.status(400).send({ success: false, message: '密碼必須 7 個字以上（不含七）' })
     }
     if (password.length > 16) {
@@ -153,7 +153,7 @@ export const login = async (req, res) => {
             result: {
                 token,
                 account: req.user.account,
-                name: req.user.name,
+                userName: req.user.userName,
                 email: req.user.email,
                 phone: req.user.phone,
                 role: req.user.role

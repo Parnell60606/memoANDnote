@@ -1,5 +1,10 @@
 import users from '../models/users.js'
 import orders from '../models/orders.js'
+import jwt from 'jsonwebtoken'
+import products from '../models/products.js'
+
+
+
 
 // copy
 
@@ -57,47 +62,38 @@ import orders from '../models/orders.js'
     前台：  {{ order.user.account }}  <<顯示order裡面的user的account屬性
         */
 
-// export const createOrder = async (req, res) => {
-//     try {
 
 /* 一個訂單裡面
     user 的 id name phone email 資料 (fk)
     orders 那邊 前台form 回傳的資料
 */
 
-// 用回傳過來的userID 建立訂單?
-// let result = await orders.findById(req.user._id)
-// result = await orders.create({
-//     user: req.user._id,
 
-//     numberOfPeople: req.body.numberOfPeople,
-//     bookingTime: req.body.bookingTime,
-//     usersNote: req.body.usersNote,
-//     orderStatus: req.body.orderStatus
-// })
-
-// 上下兩種寫法的差異?
-// await orders.create(req.body)
-
-// 需要ㄇ我的沒動原本的user
-// await req.user.save()
-
-//         res.status(200).send({ success: true, message: '', result: result._id })
-//     } catch (error) {
-//         if (error.name === 'ValidationError') {
-//             const key = Object.keys(error.errors)[0]
-//             const message = error.errors[key].message
-//             return res.status(400).send({ success: false, message })
-//         } else {
-//             res.status(500).send({ success: false, message: '伺服器錯誤' })
-//         }
-//     }
-// }
-
-// try
+// 1. 還沒驗證  2. createOrder 要把該訂單資料放到 users.pastorder  會員過去訂單
 export const createOrder = async (req, res) => {
+    // if (req.body.orderStatus === 1) return res.status(400).send({ success: false, message: '一個會員一次只能訂一筆訂單' })
+    // console.log(req.body.orderStatus) // undefine
+
+    // 在會員資料裡面找的話 ， 應該用 這個就好   const result = await users.findById(req.user._id, 'cart').populate('cart.product') 
+    // 在所有訂位裡面找 同id  orderStatus 為1 的人
+
+    //  // 找出 _id 為 123 的資料，但只顯示 _id, name, price 三個欄位
+    // > db.products.find( { _id: "ac3" } , { name:1,price:1} ) 
+
+
+    // const youHaveOrdered = orders.find({ user: req.user._id }, { orderStatus: 1 })
+    // if ()
     try {
-        await orders.create(req.body)
+
+        // console.log(youHaveOrdered)
+
+        const result = await orders.create({
+            user: req.user._id,
+            numberOfPeople: req.body.numberOfPeople,
+            bookingTime: req.body.bookingTime,
+            usersNote: req.body.usersNote,
+            orderStatus: req.body.orderStatus
+        })
         res.status(200).send({ success: true, message: '', result: result._id })
     } catch (error) {
         if (error.name === 'ValidationError') {
@@ -111,6 +107,7 @@ export const createOrder = async (req, res) => {
         }
     }
 }
+
 
 
 
@@ -161,3 +158,46 @@ export const getMyOrders = async (req, res) => {
         res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
 }
+
+
+// 編輯
+
+// export const editCart = async (req, res) => {
+//     try {
+//       if (req.body.quantity <= 0) {
+//         await users.findOneAndUpdate(
+//           { _id: req.user._id, 'cart.product': req.body.product },
+//           {
+//             $pull: {
+//               cart: { product: req.body.product }
+//             }
+//           }
+//         )
+//         // const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+//         // req.user.cart.splice(idx, 1)
+//         // await req.user.save()
+//       } else {
+//         await users.findOneAndUpdate(
+//           { _id: req.user._id, 'cart.product': req.body.product },
+//           {
+//             $set: {
+//               // $ 代表符合陣列搜尋條件的索引
+//               'cart.$.quantity': req.body.quantity
+//             }
+//           }
+//         )
+//         // const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+//         // req.user.cart[idx].quantity = req.body.quantity
+//         // await req.user.save()
+//       }
+//       res.status(200).send({ success: true, message: '' })
+//     } catch (error) {
+//       if (error.name === 'ValidationError') {
+//         const key = Object.keys(error.errors)[0]
+//         const message = error.errors[key].message
+//         return res.status(400).send({ success: false, message })
+//       } else {
+//         res.status(500).send({ success: false, message: '伺服器錯誤' })
+//       }
+//     }
+//   }

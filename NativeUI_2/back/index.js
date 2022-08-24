@@ -4,11 +4,14 @@ import express from 'express'
 // mongoDB操作工具
 import mongoose from 'mongoose'
 // 跨域套件
-
 import cors from 'cors'
 
+// ?
+import mongoSanitize from 'express-mongo-sanitize'
+
+
 import usersRouter from './routes/users.js'
-// import ordersRouter from './routes/users.js'
+import ordersRouter from './routes/orders.js'
 
 import './passport/passport.js'
 
@@ -23,18 +26,47 @@ import './passport/passport.js'
 // 連接mondoDB (網址放在.env)
 // DB_URL是環境變數可以自己設
 mongoose.connect(process.env.DB_URL)
+// ?
+mongoose.set('sanitizeFilter', true)
+
 
 const app = express()
 
+
+// 跨域請求 (放第一關)
+// 把 origin === undefined 拿掉會顯示   message: '請求格式錯誤'
+app.use(cors({
+    origin(origin, callback) {
+        if (origin === undefined || origin.includes('github') || origin.includes('localhost') || origin.includes('127.0.0.1:5173')) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not Allowed'), false)
+        }
+    }
+}))
+// 在本機測試 origin.includes('127.0.0.1:5173')   << 之後記得刪
+
+
+// 預設全部同意
+// app.use(cors());
+
+
+
 // 讀取 req.body 的 json (抓post資料)
 app.use(express.json())
+
 app.use((_, req, res, next) => {
     res.status(400).send({ success: false, message: '請求格式錯誤' })
 })
 
+
+// ?
+app.use(mongoSanitize())
+
+
 // http://localhost:4000/users   這個網址後面可以對user資料庫做動作 
 app.use('/users', usersRouter)
-// app.use('/orders', ordersRouter)
+app.use('/orders', ordersRouter)
 
 
 
