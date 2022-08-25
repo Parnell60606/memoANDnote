@@ -178,14 +178,6 @@ export default {
 }
 
 
-
-h1 {
-    margin: 0 0 20px 0;
-    margin-bottom: 50;
-
-    color: black;
-}
-
 nav .n-h2:hover {
     background: #292c38;
 }

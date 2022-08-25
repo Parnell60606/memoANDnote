@@ -22,7 +22,7 @@ export const useUserStore = defineStore({
         // 所有這些屬性都將自動推斷其類型
         token: '',
         account: '',
-        name: '',
+        userName: '',
         email: '',
         phone: '',
         role: 0
@@ -43,20 +43,23 @@ export const useUserStore = defineStore({
         }
     },
     // 修改狀態用的 function
+    // 真正的login function放這邊
     actions: {
-        async login(form) {
+        async login(formValue) {
             try {
-                const { data } = await api.post('/users/login', form)
+                const { data } = await api.post('/users/login', formValue)
                 this.token = data.result.token
                 this.account = data.result.account
+                this.userName = data.result.userName
+                this.email = data.result.email
+                this.phone = data.result.phone
                 this.role = data.result.role
-                this.cart = data.result.cart
                 Swal.fire({
                     icon: 'success',
                     title: '成功',
                     text: '登入成功'
                 })
-                router.push('/')
+                router.push('/home')
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
@@ -83,8 +86,33 @@ export const useUserStore = defineStore({
             }
             this.token = ''
             this.account = ''
+            this.userName = ''
+            this.email = ''
+            this.phone = ''
             this.role = 0
-            this.cart = 0
+
+        },
+        async getUser() {
+            if (this.token.length === 0) return
+            try {
+                const { data } = await apiAuth.get('/users/getuser')
+
+                this.account = data.result.account
+                this.userName = data.result.userName
+                this.email = data.result.email
+                this.avatar = data.result.avatar
+                this.pastOrders = data.result.pastOrders
+
+
+            } catch (error) {
+                // this.logout()
+                console.log(error.type)
+            }
         }
+    },
+    // localstorage設定  儲存token
+    persist: {
+        key: 'vite-shop',
+        paths: ['token']
     }
 })

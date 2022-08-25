@@ -236,6 +236,17 @@
 
 <br><br><br>
 
+
+# n-card
+
+
+## props  
+-  `content-style` : 同 n-layout ，不同的是直接設置padding完全無效
+  ```
+    content-style="padding: 24px;" 
+  ```
+
+
 # n-form
 使用 `async-validator` 套件
 

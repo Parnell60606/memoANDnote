@@ -20,7 +20,7 @@
             <n-space justify="end" style="padding:0 5px ;" size="large">
 
                 <!-- <n-button @click="submitCallback, showLoading = true" type="primary"> -->
-                <n-button @click="submitCallback" type="primary">
+                <n-button @click="submitCallback, logout" type="primary">
                     是
                 </n-button>
 
@@ -40,6 +40,14 @@ import { defineComponent, ref } from "vue";
 import { useMessage } from "naive-ui";
 import RegisterView from "../views/front/RegisterView.vue";
 
+
+
+
+// import { useUserStore } from '../stores/user'
+// const user = useUserStore()
+// const { logout } = user
+
+
 export default defineComponent({
     setup() {
         const message = useMessage();
@@ -48,6 +56,8 @@ export default defineComponent({
 
         window.$message = useMessage();
         return {
+            // user,
+            // logout,
             showLoading: showLoadingRef,
             showModal: showModalRef,
             bodyStyle: {
@@ -79,7 +89,7 @@ export default defineComponent({
                         showLoadingRef.value = false;
 
                     }, 800)
-            }
+            },
 
         };
     },

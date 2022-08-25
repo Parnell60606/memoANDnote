@@ -1,11 +1,16 @@
+/* 連到後台 */
 import axios from 'axios'
 import { useUserStore } from '../stores/user.js'
-import router from '../src/router'
+import router from '../router'
 
+// 建立一個新的axios的實體 api 
+// baseURL 會把設定的東西會在api請求時加在前面  (這邊設定的是 .env的網址，所以請求時就會是http://localhost:4000 (VITE_API) )
 export const api = axios.create({
     baseURL: import.meta.env.VITE_API
 })
 
+
+//   建立一個新的axios的實體 apiAuth 做攔截請求
 export const apiAuth = axios.create({
     baseURL: import.meta.env.VITE_API
 })

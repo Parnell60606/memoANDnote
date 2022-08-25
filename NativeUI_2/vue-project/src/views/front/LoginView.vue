@@ -1,4 +1,4 @@
-<template>
+<!-- <template> -->
     <!-- 登入註冊頁面 (用n-card來做) -->
     <!-- <div> -->
 
@@ -68,8 +68,8 @@
 
     <!-- </n-tabs> -->
     <!-- </n-card> -->
-    </div>
-</template>
+    <!-- </div> -->
+<!-- </template> -->
 
 
 <style scoped>

@@ -1,3 +1,16 @@
 :root {
   --sidebar-text-color: #ffffff;
 }
+
+.n-modal-mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+}
+
+.n-divider__line {
+  /* color: brown; */
+  background-color: rgba(54, 59, 75, 0.6666666667) !important;
+  -webkit-transform: translate(0px, -20px);
+          transform: translate(0px, -20px);
+}

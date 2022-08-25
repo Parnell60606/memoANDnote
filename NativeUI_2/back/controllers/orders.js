@@ -160,6 +160,25 @@ export const getMyOrders = async (req, res) => {
 }
 
 
+// TEST   用ID查訂單
+export const getMyOrder = async (req, res) => {
+    try {
+        const result = await orders.findById(req.params.id)
+        if (!result) {
+            console.log(result)
+            res.status(404).json({ success: false, message: '找不到資料(try catch order' })
+        } else {
+            res.status(200).json({ success: true, message: '', result })
+        }
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+}
+
+
+
+
+
 // 編輯
 
 // export const editCart = async (req, res) => {

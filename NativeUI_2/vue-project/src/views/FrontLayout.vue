@@ -48,20 +48,56 @@
           </n-space>
 
 
+          <n-space class="header-end-button" :size="24">
 
-          <div class="login-logout">
 
-            <n-message-provider>
-              <RegisterModal />
-            </n-message-provider>
-          </div>
+            <div class="admin" v-if="isAdmin">
+              <n-button round>
+                <router-link to="/admin">
+                  <div>管理者後台</div>
+                </router-link>
+              </n-button>
+            </div>
+
+
+            <div class="menber" v-if="isLogin && !isAdmin">
+              <n-button round>
+                <router-link to="/menber">
+                  <div>我的訂單</div>
+                </router-link>
+              </n-button>
+            </div>
+
+
+
+
+
+            <div class="login-logout">
+
+              <n-message-provider>
+
+                <RegisterModal v-if="!isLogin" />
+
+                <!-- <LogoutModal v-if="isLogin" /> -->
+                <!-- logoutModal的Pinia怪怪的會404 代替↓ -->
+                <n-button @click="logout" round v-if="isLogin">
+                  <div>登出</div>
+                </n-button>
+
+              </n-message-provider>
+            </div>
+
+
+          </n-space>
 
         </n-space>
 
       </n-layout-header>
 
       <!-- 前台網頁內容(渲染) ----------------------------------------------------------------------------->
-      <n-layout-content content-style="padding: 24px;">
+      <!-- <n-layout-content content-style="padding: 24px;"> -->
+      <n-layout-content>
+
 
         <div class="container">
 
@@ -116,10 +152,6 @@
           </div>
         </router-link>
 
-        <!-- 測試用 登出 -->
-        <n-message-provider>
-          <LogoutModal />
-        </n-message-provider>
 
 
       </n-layout-footer>
@@ -134,18 +166,31 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+// naive 的 主題變量
 import themeOverrides from '../assets/theme'
 
 
+
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '../stores/user';
+
+const user = useUserStore()
+const { logout } = user
+const { isLogin, isAdmin, cart } = storeToRefs(user)
+
 </script>
 
-<script>
-
-</script>
 
 
 <style scoped>
-.n-layout-header,
+.n-layout-header {
+  background: #363B4B;
+  padding: 16px;
+  color: white;
+
+}
+
 .n-layout-footer {
   /* background: rgba(128, 128, 128, 0.2); */
   background: #363B4B;
@@ -162,8 +207,9 @@ import themeOverrides from '../assets/theme'
     max-width: 500px !important;
 } */
 
-.login-logout {
-  line-height: 44px;
+.header-end-button {
+  /* display: flex; */
+  line-height: 48px;
   /* align-items: center; */
   /* justify-content: center; */
 }
@@ -176,10 +222,12 @@ a:visited {
   color: inherit;
 }
 
-.n-layout-header a {
+/* .n-layout-header a {
   color: white;
-  /* color: white !important; */
-}
+} */
+
+
+
 
 .test-button {
   background: rgba(245, 222, 179, 0.2);

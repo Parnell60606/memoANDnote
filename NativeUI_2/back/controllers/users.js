@@ -215,6 +215,7 @@ export const getUserId = async (req, res) => {
     try {
         // 傳該會員的所有資料(除了password)
         const result = await users.findById(req.params.id)
+        console.log(users.findById(req.params.id))
         if (!result) {
             res.status(404).json({ success: false, message: '找不到資料' })
         } else {
@@ -241,7 +242,10 @@ export const getData = (req, res) => {
         result: {
             _id: req.user._id,
             account: req.user.account,
-            avatar: req.user.avatar
+            userName: req.user.userName,
+            email: req.user.email,
+            avatar: req.user.avatar,
+            pastOrders: req.user.pastOrders
         }
     })
 }
@@ -259,7 +263,9 @@ export const getUser = (req, res) => {
             message: '',
             result: {
                 account: req.user.account,
+                userName: req.user.userName,
                 email: req.user.email,
+                avatar: req.user.avatar,
                 role: req.user.role,
                 pastOrders: req.user.pastOrders
             }

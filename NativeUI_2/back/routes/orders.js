@@ -5,6 +5,7 @@ import admin from '../middleware/admin.js'   // admin權限
 
 import {
     createOrder,
+    getMyOrder
 
 } from '../controllers/orders.js'
 
@@ -17,6 +18,10 @@ const router = express.Router()
 
 router.post('/', auth.jwt, createOrder)
 // router.post('/create', content('multipart/form-data'), auth.jwt, createProduct)
+
+
+// try
+router.get('/getbyid/:id', getMyOrder)
 
 
 

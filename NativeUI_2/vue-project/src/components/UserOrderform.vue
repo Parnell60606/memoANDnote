@@ -13,6 +13,10 @@
         <n-grid cols="12">
 
 
+            <n-form-item-gi :span="12" label="用戶資料">
+                會員名稱：testtest 手機：testtest 電子郵件：testtest
+
+            </n-form-item-gi>
 
             <n-form-item-gi :span="12" label="form標題">
                 <n-input round placeholder="中" />

@@ -8,7 +8,7 @@
 const lightBrown = "#F0F0EAFF"
 
 
-const themeOverrides = {
+const memberBackTheme = {
     common: {
         // primaryColor: '#F0F0EA'
         // primaryColor: '#A05C18FF' //  深褐色
@@ -23,21 +23,7 @@ const themeOverrides = {
 
         "textColorInverted": "rgba(152, 58, 87, 1)"
     },
-    Button: {
-        // textColor: '#FF0000'
-        textColor: '#ffffff',
-        "colorHover": "#FF000000",
-        "borderHover": "1px solid #aaffff",
 
-
-    },
-    "Tabs": {
-        // "colorSegment": "rgba(0, 0, 255, 1)",
-        // "tabTextColorBar": "#E1A71EFF", // 金色
-        "tabTextColorBar": "#AFB3BBFF", // 灰藍色
-        "tabTextColorActiveBar": "#F1C661FF",
-        "tabTextColorHoverBar": "#9CC0D3FF"   // hover變藍
-    },
     "Dialog": {
         "padding": "50px 40px 40px 50px",
         "borderRadius": "15px"
@@ -46,7 +32,8 @@ const themeOverrides = {
     "Card": {
         // "colorModal": lightBrown,
         "colorModal": "#FFFFFFDD",
-        "borderRadius": "15px"
+        "borderRadius": "30px"
+
     },
     // 彈出訊息 (對話框)
     "Popover": {
@@ -70,4 +57,6 @@ const themeOverrides = {
 
 // Naive UI 右下角調整主題變量
 
-export default themeOverrides
+export default memberBackTheme
+
+
