@@ -90,6 +90,7 @@ export const createOrder = async (req, res) => {
         const result = await orders.create({
             user: req.user._id,
             numberOfPeople: req.body.numberOfPeople,
+            bookingDate: req.body.bookingDate,
             bookingTime: req.body.bookingTime,
             usersNote: req.body.usersNote,
             orderStatus: req.body.orderStatus
@@ -101,7 +102,7 @@ export const createOrder = async (req, res) => {
             const message = error.errors[key].message
             return res.status(400).send({ success: false, message })
         } else if (error.name === 'MongoServerError' && error.code === 11000) {
-            res.status(400).send({ success: false, message: '40404' })
+            res.status(400).send({ success: false, message: '40404(order)' })
         } else {
             res.status(500).send({ success: false, message: '伺服器錯誤' })
         }

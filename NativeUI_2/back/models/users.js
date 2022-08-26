@@ -77,6 +77,7 @@ const schema = new mongoose.Schema({
 
     // 紀錄會員過去的訂單  (需要ㄇ)
     pastOrders: {
+        // 過去訂位為陣列(只存訂位id)
         type: [
             {
                 order: {

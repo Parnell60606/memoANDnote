@@ -23,7 +23,7 @@ import './passport/passport.js'
 
 
 
-// 連接mondoDB (網址放在.env)
+// 連接mondoDB資料庫 (網址放在.env)
 // DB_URL是環境變數可以自己設
 mongoose.connect(process.env.DB_URL)
 // ?
@@ -36,6 +36,7 @@ const app = express()
 // 跨域請求 (放第一關)
 // 把 origin === undefined 拿掉會顯示   message: '請求格式錯誤'
 app.use(cors({
+    // origin 為請求來源網域, callback 為是否允許的回應
     origin(origin, callback) {
         if (origin === undefined || origin.includes('github') || origin.includes('localhost') || origin.includes('127.0.0.1:5173')) {
             callback(null, true)
@@ -64,6 +65,7 @@ app.use((_, req, res, next) => {
 app.use(mongoSanitize())
 
 
+// 將路由分類，所有進到 /users 路徑的請求使用 users 的路由
 // http://localhost:4000/users   這個網址後面可以對user資料庫做動作 
 app.use('/users', usersRouter)
 app.use('/orders', ordersRouter)
@@ -169,6 +171,7 @@ app.get('/', async (req, res) => {
 
 
 // 監聽 (跟line機器人一樣)
+// 在 4000 port 啟用
 app.listen(process.env.PORT || 4000, () => {
     console.log('Server States')
 })

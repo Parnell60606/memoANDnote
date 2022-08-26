@@ -13,10 +13,15 @@ const schema = new mongoose.Schema({
         required: [true, '請輸入人數'],
         max: [20, '訂位人數過多']
     },
-    // 待確認
-    bookingTime: {
-        type: Date,
+    bookingDate: {
+        // type: Date,
+        type: Number, // unix時間是用number儲存
         required: [true, '請輸入日期']
+    },
+    bookingTime: {
+        // type: Date,
+        type: Number, // unix時間是用number儲存
+        required: [true, '請輸入時間']
     },
     usersNote: {
         type: String,
@@ -32,10 +37,21 @@ const schema = new mongoose.Schema({
         min: 1,
         max: 3,
         default: 1
-    }
+    },
+    createdAt: Number,
+    updatedAt: Number
+
 
 }, {
-    timestamps: true
+    // timestamps 是用 ISO-Date 格式儲存，
+    // 用下面的函式覆蓋，改成unix儲存  (上面createdAt跟updatedAt資料形態要改成Number)
+
+    timestamps: {
+        // 以秒為單位 (去尾數)
+        // Date.now() 是本地時間
+        currentTime: () => Math.floor(Date.now() / 1000)
+    }
+
     // createdAt: 表示此文檔創建時間的日期
     // updatedAt：表示此文檔上次更新時間的日期
     // 查詢方式  直接用 createdAt  updatedAt (跟上面的 numberOfPeople 等查詢方式一樣 )

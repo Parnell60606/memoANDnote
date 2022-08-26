@@ -265,6 +265,7 @@ export const getUser = (req, res) => {
                 account: req.user.account,
                 userName: req.user.userName,
                 email: req.user.email,
+                phone: req.user.phone,
                 avatar: req.user.avatar,
                 role: req.user.role,
                 pastOrders: req.user.pastOrders
