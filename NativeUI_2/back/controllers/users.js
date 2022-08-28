@@ -262,6 +262,7 @@ export const getUser = (req, res) => {
             success: true,
             message: '',
             result: {
+                id: req.user.id,
                 account: req.user.account,
                 userName: req.user.userName,
                 email: req.user.email,

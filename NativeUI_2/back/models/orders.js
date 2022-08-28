@@ -8,11 +8,6 @@ const schema = new mongoose.Schema({
     },
 
     // orderDetails: [{
-    numberOfPeople: {
-        type: Number,
-        required: [true, '請輸入人數'],
-        max: [20, '訂位人數過多']
-    },
     bookingDate: {
         // type: Date,
         type: Number, // unix時間是用number儲存
@@ -22,6 +17,11 @@ const schema = new mongoose.Schema({
         // type: Date,
         type: Number, // unix時間是用number儲存
         required: [true, '請輸入時間']
+    },
+    numberOfPeople: {
+        type: Number,
+        required: [true, '請輸入人數'],
+        max: [20, '訂位人數過多']
     },
     usersNote: {
         type: String,
