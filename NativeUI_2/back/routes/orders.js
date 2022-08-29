@@ -5,7 +5,8 @@ import admin from '../middleware/admin.js'   // admin權限
 
 import {
     createOrder,
-    getMyOrder
+    getMyOrder,
+    getAllOrders
 
 } from '../controllers/orders.js'
 
@@ -23,6 +24,11 @@ router.post('/', auth.jwt, createOrder)
 // try
 router.get('/getbyid/:id', getMyOrder)
 
+
+
+// 怪怪的先刪auth.jwt 
+router.get('/all', auth.jwt, admin, getAllOrders)
+// router.get('/all', admin, getAllOrders)
 
 
 export default router

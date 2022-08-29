@@ -93,7 +93,8 @@ export const createOrder = async (req, res) => {
             bookingDate: req.body.bookingDate,
             bookingTime: req.body.bookingTime,
             usersNote: req.body.usersNote,
-            orderStatus: req.body.orderStatus
+            orderStatus: req.body.orderStatus,
+            isFieldBooking: req.body.isFieldBooking
         })
         res.status(200).send({ success: true, message: '', result: result._id })
     } catch (error) {
@@ -176,6 +177,19 @@ export const getMyOrder = async (req, res) => {
     }
 }
 
+
+
+// 要帶著token抓
+export const getAllOrders = async (req, res) => {
+    try {
+        // .populate('user', 'account')
+        // 自動抓 user 欄位對應的 ref 資料，只取 account 欄位
+        const result = await orders.find().populate('user', 'userName')
+        res.status(200).send({ success: true, message: '', result })
+    } catch (error) {
+        res.status(500).send({ success: false, message: '伺服器錯誤' })
+    }
+}
 
 
 

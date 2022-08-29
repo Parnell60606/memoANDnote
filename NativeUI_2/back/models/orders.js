@@ -38,6 +38,11 @@ const schema = new mongoose.Schema({
         max: 3,
         default: 1
     },
+    isFieldBooking: {
+        // 1. 是現場訂單  0. 是會員訂單
+        type: Number,
+        default: 0
+    },
     createdAt: Number,
     updatedAt: Number
 
