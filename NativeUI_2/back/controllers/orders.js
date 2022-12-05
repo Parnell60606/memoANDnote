@@ -6,8 +6,6 @@ import products from '../models/products.js'
 
 
 
-// copy
-
 // // 建立訂單
 /* export const createOrder = async (req, res) => {
     try {
